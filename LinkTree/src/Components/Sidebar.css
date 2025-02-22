@@ -1,0 +1,96 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: fixed;
+  
+  
+  }
+  
+  .logod {
+    display: flex;
+   
+    gap: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom-right-radius: 30px;
+   
+    padding: 30px 30px;
+ }
+
+  
+  
+  .logo-icond {
+    width: 30px;
+    height: 30px;
+  }
+ 
+  .menu {
+    list-style: none;
+    background: none;
+    
+  }
+  
+  .menu button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 15px;
+    font-size: 16px;
+    color: #444;
+    cursor: pointer;
+    width: 100%;
+    background: none;
+    border: none;
+   
+
+
+   
+    
+  }
+  .menu button:hover 
+  {
+    background-color:#F5F5F5;
+    border-radius: none;
+
+  }
+  
+  .menu li.active {
+    background: #f0f0f0;
+    color: #27ae60;
+    font-weight: bold;
+  }
+  
+  .menu li:hover {
+    background: #f8f8f8;
+  }
+  
+  .icon {
+    font-size: 18px;
+  }
+  
+  .profile {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 25px;
+    border: 1px solid #000000;
+    background: #fff;
+    cursor: pointer;
+  }
+  
+  .avatar {
+    width: 20%;
+    height: 20%;
+    border-radius: 50%;
+    background: gray;
+  }
+  
+  .dashfooter
+  {
+    padding: 10px;
+  }

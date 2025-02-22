@@ -1,0 +1,120 @@
+    /* Phone Container */
+.phone-container {
+    width: 250px;
+    background:#f8f8f8;
+    height: 500px;
+    border-radius: 30px;
+    text-align: center;
+    border: 10px solid black;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+  .phonetitle
+  {
+   padding-bottom: 10px;
+  }
+  /* Mobile Header */
+  .phone-header {
+    display: flex;
+    justify-content: start;
+    margin-bottom: -10px;
+    padding: 10px;
+   
+  }
+  
+  .share-btn-ph {
+    background:#F0F0F0;
+    border: 1px solid #ddd;
+   padding: 5px;
+    border-radius: 50px;
+    cursor: pointer;
+    
+  }
+  
+  /* Profile Section */
+  .phone-profile {
+    background: #3d2f23;
+  
+    border-radius: 20px 20px 20px 20px;
+    
+  }
+  .spark-logo img{
+    width: 15px;
+  }
+  
+  .profile-img {
+    width: 60px;
+    border-radius: 50%;
+  }
+  
+  h3 {
+    color: white;
+    margin-top: 10px;
+  }
+  
+  /* Buttons */
+  .phone-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .btn-link {
+    background: green;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .btn-shop {
+    background: lightgray;
+    padding: 5px 15px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Links */
+  .phone-links {
+    margin-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  .link-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #f0f0f0;
+    padding: 10px;
+    border-radius: 20px;
+    margin: 5px 0;
+  }
+  
+  .link-item img {
+    width: 20px;
+  }
+  
+  /* Connect Button */
+  .connect-btn {
+    background: #27ae60;
+    color: white;
+    padding: 8px 40px;
+    border-radius: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+  }
+  
+  /* Branding */
+  .spark-logo {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  .phone-connect
+  {
+    padding-top: 80px;
+  }

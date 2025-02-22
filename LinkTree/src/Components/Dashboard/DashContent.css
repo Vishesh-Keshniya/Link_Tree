@@ -1,0 +1,42 @@
+/* Dashboard Layout */
+.dashboard-container {
+    padding: 20px;
+    background:#F5F5F5;
+    width: 100%;
+  }
+  .pp
+  {
+    font-size: 15px;
+    font-weight: 200;
+    padding-top: 10px;
+  }
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .share-btn {
+    background: white;
+    border: 1px solid #ddd;
+    padding: 8px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  /* Dashboard Content Layout */
+  .dashboard-content {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .profile-section
+  {
+    width: 100%;
+  }
+  /* Mobile Preview */
+ 
+  
+  

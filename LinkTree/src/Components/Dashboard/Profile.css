@@ -1,0 +1,291 @@
+/* Profile Container */
+.profile-container {
+    padding: 20px;
+    background: #f8f8f8;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    
+  }
+  
+  /* Profile Card */
+  .profile-card {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: center;
+  }
+  .profile-header-btn
+  {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+  }
+  .profile-header {
+    display: flex;
+
+}
+  
+  .profile-img {
+    width: 100px;
+    border-radius: 50%;
+    padding-right: 20px;
+  }
+  
+  .pick-image {
+    background:#28A263;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  
+  .remove-btn {
+    background: rgb(255, 255, 255);
+    padding: 10px 20px;
+    border-radius: 20px;
+    border:  rgb(209, 209, 209) solid .5px;
+    cursor: pointer;
+    margin-top: 5px;
+  }
+  
+  /* Profile Details */
+  .profile-details {
+    margin-top: 10px;
+  }
+  
+  label {
+    display: block;
+    font-size: 14px;
+    text-align: left;
+    margin: 5px 0;
+  }
+  
+
+  .pt
+  {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+   
+    border-radius: 5px;
+    background: #F6F7F5;
+  }
+  
+  .bio-count {
+    font-size: 12px;
+    text-align: right;
+  }
+  .ptt
+  {
+    width: 100%;
+    box-shadow: none;
+    background: #F6F7F5;
+    border: none;
+    padding: 5px;
+    
+  }
+  /* Add Section */
+  .add-section {
+    margin-top: 15px;
+    background: white;
+    padding: 10px;
+    border-radius: 15px;
+    text-align: left;
+  }
+  .biopart
+  {
+    background:  #F6F7F5;
+    padding: 8px;
+    margin-top: 10px;
+    padding-bottom: 0;
+  }
+  .bioarea
+  {
+    width: 100%;
+    border: none;
+    background:  #F6F7F5;
+    margin-top: 5px;
+}
+  .add-link,
+  .add-shop {
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 30px;
+    font-size: 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .add-link {
+    background: #27ae60;
+    color: white;
+  }
+  
+  .add-shop {
+    background: #F6F7F5;
+  }
+
+  .add-section
+  {
+    padding: 30px;
+  }
+  
+  .add-btn {
+    width: 100%;
+    background: #27ae60;
+    color: white;
+    padding: 8px;
+    border-radius: 30px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    border: none;
+  }
+  
+  /* Banner Card */
+  .banner-card {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    text-align: start;
+    margin-top: 15px;
+  }
+ 
+  .banner-preview {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+  }
+  
+  .banner {
+    width: 100%;
+    height: 200px;
+    background: #302600;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+  }
+  
+  .aname
+  {
+    color: #ffffff;
+  }
+  .sname
+  {
+    color: #969696;
+
+  }
+  .banner-img {
+    width: 50px;
+    border-radius: 50%;
+  }
+  
+ 
+  /* Background Color Selector */
+  .bg-selector {
+    margin-top: 10px;
+    text-align: start;
+  }
+  
+  .color-options {
+    display: flex;
+    justify-content: start;
+
+    gap: 10px;
+  }
+  
+  .color-circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .black {
+    background: black;
+  }
+  
+  .white {
+    background: white;
+    border: 1px solid #ddd;
+  }
+  
+  .brown {
+    background: #302600;
+  }
+  .bannp{
+    color: #000;
+   margin-top: -20px;
+    padding-bottom: 20px;
+   
+  }
+   .bann{
+    color: #000;
+  margin-bottom: -10px;
+  padding-top: 20px;
+   
+   
+  }
+ 
+  
+  .save-part
+  {
+    margin-top: 10px;
+    
+    width: 20%;
+    margin-left: 80%;
+  }
+  /* Save Button */
+  .save-btn {
+    background: #27ae60;
+    color: white;
+    padding: 8px;
+    border-radius: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border: none;
+    width: 100%;
+  }
+
+
+
+    .color-picker {
+        display: flex;
+        align-items: center;
+        background: #ffffff;
+        padding: 8px;
+        border-radius: 10px;
+    
+        
+    }
+    
+    .color-box {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        cursor: pointer;
+        border: 1px solid #ccc;
+    }
+    
+    .hidden-color-input {
+        display: none;
+    }
+    
+    .color-code {
+        border: none;
+        background: transparent;
+        margin-left: 10px;
+        font-size: 14px;
+        font-weight: bold;
+        color: #333;
+        width: 80px;
+        text-align: center;
+    }
+        

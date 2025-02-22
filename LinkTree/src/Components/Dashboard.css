@@ -1,0 +1,13 @@
+.dash
+{
+    display: flex;
+}
+
+.l
+{
+    width: 20%;
+}
+.r
+{
+    width: 80%;
+}
