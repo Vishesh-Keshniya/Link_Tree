@@ -55,8 +55,12 @@
   .phone-buttons {
     display: flex;
     justify-content: center;
-    gap: 10px;
+   background: #D3D3D3;
     margin-top: 10px;
+    margin-left: 60px;
+    margin-right: 60px;
+    border-radius: 20px;
+
   }
   
   .btn-link {
@@ -74,6 +78,12 @@
     border-radius: 20px;
     border: none;
     cursor: pointer;
+  }
+  .btn-shop:hover
+  {
+    background:#008000;
+    color: white;
+
   }
   
   /* Links */

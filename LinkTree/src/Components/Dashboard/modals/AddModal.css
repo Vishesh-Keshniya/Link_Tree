@@ -1,0 +1,191 @@
+.modal-container {
+    background: white;
+   padding-top: 20px;
+   padding-left: 20px;
+   padding-right: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    padding-bottom: 100px;
+
+    
+    
+  }
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  
+  .tab-container {
+    display: flex;
+  
+    margin-bottom: 10px;
+  }
+  
+  .tab-btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: bold;
+    background: lightgray;
+  }
+  
+  .tab-btn.active {
+    background:#28A263;
+    color: white;
+  }
+  
+  .modal-content {
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba( 0, 0, 0, 0.2);
+    border-radius: 20px;
+   
+  }
+  
+ .ip{
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+   
+    border-radius: 20px;
+    background: #f4f4f4;
+    box-shadow: none;
+  }
+  
+ /* Toggle Switch Container */
+.toggle-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 10px 0;
+  padding-left: 10px;
+}
+
+/* The Switch - Position the switch container */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px; /* Increased width for a better look */
+  height: 24px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The Slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc; /* Default color */
+  transition: 0.4s;
+  border-radius: 30px;
+}
+
+/* Circle inside the Slider */
+.slider::before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+/* When checkbox is checked */
+input:checked + .slider {
+  background-color: #28A263; /* Green color when enabled */
+}
+
+/* Move the circle to the right when checked */
+input:checked + .slider::before {
+  transform: translateX(26px);
+}
+
+  
+  .app-grid {
+    display: flex;
+   width: 100%;
+    margin-top: 10px;
+  }
+
+  .app-grid-shop {
+    display: flex;
+   width: 100%;
+    margin-top: 10px;
+  }
+  
+  
+  .app-item {
+    text-align: center;
+    cursor: pointer;
+    background: #f4f4f4;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .modal-content h3{
+    color: black;
+  }
+
+  .modal-ic
+  {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .modal-ic p 
+  {
+    font-size: 10px;
+    font-weight: 100;
+  }
+
+  .ic-btn
+  {
+    border: none;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .link-title
+  {
+    display: flex;
+  }
+    .link-title button
+    {
+        background: none;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+    } 
+
+  .toggle-container button{
+    border: none;
+    background: none;
+    padding: 5px;
+    cursor: pointer;
+  }

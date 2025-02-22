@@ -132,7 +132,9 @@
 
   .add-section
   {
-    padding: 30px;
+   padding: 10px;
+   background: #ffffff;
+
   }
   
   .add-btn {
