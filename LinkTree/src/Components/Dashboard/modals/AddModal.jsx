@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import "./AddModal.css";
 
-const AddModal = ({ closeModal, activeTab }) => {
+const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
   const [linkTitle, setLinkTitle] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
   const [isEnabled, setIsEnabled] = useState(false);
   const [currentTab, setCurrentTab] = useState(activeTab); // Track the active tab
+  const [selectedApp, setSelectedApp] = useState(""); // Track the selected application
+  const [error, setError] = useState(""); // Track error messages
 
   // Function to close modal if clicking outside
   const handleOverlayClick = (e) => {
@@ -14,11 +16,95 @@ const AddModal = ({ closeModal, activeTab }) => {
     }
   };
 
+  // Function to handle form submission
+  const handleSubmit = async () => {
+    // Validate that an application is selected
+    if (!selectedApp) {
+      setError("Please select an application.");
+      return;
+    }
+
+    // Validate that title and URL are filled
+    if (!linkTitle || !linkUrl) {
+      setError("Please fill in all fields.");
+      return;
+    }
+
+    const entry = {
+      title: linkTitle,
+      url: linkUrl,
+      type: currentTab, // 'link' or 'shop'
+      tag: selectedApp, // Include the selected application name
+    };
+
+    try {
+      const token = localStorage.getItem("token"); // Retrieve the token
+      if (!token) {
+        setError("Unauthorized. Please log in.");
+        return;
+      }
+
+      const response = await fetch("http://localhost:3000/api/add-entry", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`, // Include the token in the headers
+        },
+        body: JSON.stringify(entry),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Add the new entry to the parent component's state
+        addNewEntry(entry);
+        alert("Entry added successfully!");
+        closeModal();
+      } else {
+        alert("Failed to add entry: " + data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("An error occurred while adding the entry.");
+    }
+  };
+
+  // Function to handle toggle switch change
+  const handleToggleChange = () => {
+    setIsEnabled(!isEnabled);
+    if (!isEnabled) {
+      handleSubmit(); // Submit the form when the toggle is enabled
+    }
+  };
+
+  // Function to handle application icon click
+  const handleAppClick = (appName) => {
+    setSelectedApp(appName); // Set the selected application name
+    setError(""); // Clear any previous error message
+  };
+
+  // Function to reset input fields
+  const handleDeleteClick = () => {
+    setLinkTitle(""); // Reset link title
+    setLinkUrl(""); // Reset link URL
+    setSelectedApp(""); // Reset selected app
+    setError(""); // Clear any error message
+  };
+
+  // Function to copy the link URL to the clipboard
+  const handleCopyClick = () => {
+    if (linkUrl) {
+      navigator.clipboard.writeText(linkUrl) // Copy the URL to the clipboard
+        .then(() => alert("Link copied to clipboard!"))
+        .catch(() => alert("Failed to copy link."));
+    } else {
+      alert("No link to copy.");
+    }
+  };
+
   return (
     <div className="modal-overlay" onClick={handleOverlayClick}>
       <div className="modal-container">
-        {/* Close button */}
-
         {/* Tabs for Add Link & Add Shop */}
         <div className="tab-container">
           <button 
@@ -39,77 +125,146 @@ const AddModal = ({ closeModal, activeTab }) => {
         <div className="modal-content">
           <h3>{currentTab === "link" ? "Add a New Link" : "Add a New Shop"}</h3>
 
-          <div className="link-title">
-            <input
-              className="ip"
-              type="text"
-              placeholder={currentTab === "link" ? "Link Title" : "Shop Title"}
-              value={linkTitle}
-              onChange={(e) => setLinkTitle(e.target.value)}
-            />
-            
-            {/* Toggle switch for both "Link" and "Shop" */}
-            <div className="toggle-container">
-              <label className="switch">
-                <input
-                  type="checkbox"
-                  checked={isEnabled}
-                  onChange={() => setIsEnabled(!isEnabled)}
-                />
-                <span className="slider"></span>
-              </label>
-            </div>
-          </div>
-
-          <div className="link-title">
-            <input
-              className="ip"
-              type="text"
-              placeholder={currentTab === "link" ? "Link URL" : "Shop URL"}
-              value={linkUrl}
-              onChange={(e) => setLinkUrl(e.target.value)}
-            />
-            <button><img src="copy.png" alt="Copy" /></button>
-            <button><img src="del.png" alt="Delete" /></button>
-          </div>
-
-          <h4>Applications</h4>
-
-          {/* Show app-grid for "Add Link" */}
-          {currentTab === "link" && (
-            <div className="app-grid">
-              <div className="modal-ic">
-                <button className="ic-btn"><img src="instr.png" alt="Instagram" /></button> <p>Instagram</p>
-              </div>
-              <div className="modal-ic">
-                <button className="ic-btn"><img src="fb.png" alt="Facebook" /></button> <p>Facebook</p>
-              </div>
-              <div className="modal-ic">
-                <button className="ic-btn"><img src="ytr.png" alt="YouTube" /></button> <p>YouTube</p>
-              </div>
-              <div className="modal-ic">
-                <button className="ic-btn"><img src="x.png" alt="X" /></button> <p>X</p>
+          <form>
+            <div className="link-title">
+              <input
+                className="ip"
+                type="text"
+                placeholder={currentTab === "link" ? "Link Title" : "Shop Title"}
+                value={linkTitle}
+                onChange={(e) => setLinkTitle(e.target.value)}
+                required
+              />
+              
+              {/* Toggle switch for both "Link" and "Shop" */}
+              <div className="toggle-container">
+                <label className="switch">
+                  <input
+                    type="checkbox"
+                    checked={isEnabled}
+                    onChange={handleToggleChange} // Use the new handler
+                  />
+                  <span className="slider"></span>
+                </label>
               </div>
             </div>
-          )}
 
-          {/* Show app-grid-shop for "Add Shop" */}
-          {currentTab === "shop" && (
-            <div className="app-grid-shop">
-              <div className="modal-ic">
-                <button className="ic-btn"><img src="swiggi.png" alt="Swiggi" /></button> <p>Swiggi</p>
-              </div>
-              <div className="modal-ic">
-                <button className="ic-btn"><img src="flipkart.png" alt="Flipkart" /></button> <p>Flipkart</p>
-              </div>
-              <div className="modal-ic">
-                <button className="ic-btn"><img src="zomato.png" alt="Zomato" /></button> <p>Zomato</p>
-              </div>
-              <div className="modal-ic">
-                <button className="ic-btn"><img src="shop.png" alt="Other" /></button> <p>Other</p>
-              </div>
+            <div className="link-title">
+              <input
+                className="ip"
+                type="text"
+                placeholder={currentTab === "link" ? "Link URL" : "Shop URL"}
+                value={linkUrl}
+                onChange={(e) => setLinkUrl(e.target.value)}
+                required
+              />
+              {/* Copy Button */}
+              <button type="button" onClick={handleCopyClick}>
+                <img src="copy.png" alt="Copy" />
+              </button>
+              {/* Delete Button */}
+              <button type="button" onClick={handleDeleteClick}>
+                <img src="del.png" alt="Delete" />
+              </button>
             </div>
-          )}
+
+            <h4>Applications</h4>
+
+            {/* Show app-grid for "Add Link" */}
+            {currentTab === "link" && (
+              <div className="app-grid">
+                <div className="modal-ic">
+                  <button 
+                    type="button" 
+                    className={`ic-btn ${selectedApp === "Instagram" ? "selected" : ""}`}
+                    onClick={() => handleAppClick("Instagram")} // Handle Instagram click
+                  >
+                    <img src="instr.png" alt="Instagram" />
+                  </button> 
+                  <p>Instagram</p>
+                </div>
+                <div className="modal-ic">
+                  <button 
+                    type="button" 
+                    className={`ic-btn ${selectedApp === "Facebook" ? "selected" : ""}`}
+                    onClick={() => handleAppClick("Facebook")} // Handle Facebook click
+                  >
+                    <img src="fb.png" alt="Facebook" />
+                  </button> 
+                  <p>Facebook</p>
+                </div>
+                <div className="modal-ic">
+                  <button 
+                    type="button" 
+                    className={`ic-btn ${selectedApp === "YouTube" ? "selected" : ""}`}
+                    onClick={() => handleAppClick("YouTube")} // Handle YouTube click
+                  >
+                    <img src="ytr.png" alt="YouTube" />
+                  </button> 
+                  <p>YouTube</p>
+                </div>
+                <div className="modal-ic">
+                  <button 
+                    type="button" 
+                    className={`ic-btn ${selectedApp === "X" ? "selected" : ""}`}
+                    onClick={() => handleAppClick("X")} // Handle X click
+                  >
+                    <img src="x.png" alt="X" />
+                  </button> 
+                  <p>X</p>
+                </div>
+              </div>
+            )}
+
+            {/* Show app-grid-shop for "Add Shop" */}
+            {currentTab === "shop" && (
+              <div className="app-grid-shop">
+                <div className="modal-ic">
+                  <button 
+                    type="button" 
+                    className={`ic-btn ${selectedApp === "Swiggi" ? "selected" : ""}`}
+                    onClick={() => handleAppClick("Swiggi")} // Handle Swiggi click
+                  >
+                    <img src="swiggi.png" alt="Swiggi" />
+                  </button> 
+                  <p>Swiggi</p>
+                </div>
+                <div className="modal-ic">
+                  <button 
+                    type="button" 
+                    className={`ic-btn ${selectedApp === "Flipkart" ? "selected" : ""}`}
+                    onClick={() => handleAppClick("Flipkart")} // Handle Flipkart click
+                  >
+                    <img src="flipkart.png" alt="Flipkart" />
+                  </button> 
+                  <p>Flipkart</p>
+                </div>
+                <div className="modal-ic">
+                  <button 
+                    type="button" 
+                    className={`ic-btn ${selectedApp === "Zomato" ? "selected" : ""}`}
+                    onClick={() => handleAppClick("Zomato")} // Handle Zomato click
+                  >
+                    <img src="zomato.png" alt="Zomato" />
+                  </button> 
+                  <p>Zomato</p>
+                </div>
+                <div className="modal-ic">
+                  <button 
+                    type="button" 
+                    className={`ic-btn ${selectedApp === "Other" ? "selected" : ""}`}
+                    onClick={() => handleAppClick("Other")} // Handle Other click
+                  >
+                    <img src="shop.png" alt="Other" />
+                  </button> 
+                  <p>Other</p>
+                </div>
+              </div>
+            )}
+
+            {/* Display error message if no application is selected */}
+            {error && <p className="error-message">{error}</p>}
+          </form>
         </div>
       </div>
     </div>
