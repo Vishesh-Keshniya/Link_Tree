@@ -4,16 +4,23 @@ import AddModal from "./modals/AddModal";
 import EditModal from "./modals/EditModal"; 
 import EditModalShop from "./modals/EditModalShop";
 
-const Profile = () => {
+const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
   const [color, setColor] = useState("#000000");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showEditModalShop, setShowEditModalShop] = useState(false); // State for Shop edit modal
   const [activeTab, setActiveTab] = useState("link"); 
   const [links, setLinks] = useState([]); 
-  const [showLinks, setShowLinks] = useState(true); 
+  const [showLinks, setShowLinks] = useState(() => {
+    return localStorage.getItem("activeTab") === "shop" ? false : true;
+  });
+  
   const [username, setUsername] = useState(""); 
   const [editEntry, setEditEntry] = useState(null); 
+  useEffect(() => {
+    localStorage.setItem("activeTab", showLinks ? "link" : "shop");
+  }, [showLinks]);
+
 
   useEffect(() => {
     fetchUserData();
@@ -38,6 +45,7 @@ const Profile = () => {
       const data = await response.json();
       if (data.success) {
         setUsername(data.user.username);
+        setBio(data.user.bio || "");  // ✅ Update global bio state
         const userLinks = [
           ...data.user.addLinks.map(link => ({ ...link, type: "link", saveMode: false })), // Add saveMode property
           ...data.user.addShop.map(shop => ({ ...shop, type: "shop", saveMode: false })) // Add saveMode property
@@ -100,16 +108,23 @@ const Profile = () => {
     setLinks([...links, { ...newEntry, saveMode: false }]); // Add saveMode property to new entry
   };
 
-  const deleteLink = async (id) => {
+  const deleteLink = async (id, type) => {
     const linkToDelete = links.find((link) => link._id === id);
-    if (linkToDelete.saveMode) {
-      alert("Please turn off the save mode for this link to delete.");
+    if (!linkToDelete) {
+      alert("Error: Entry not found.");
       return;
     }
+  
+    if (linkToDelete.saveMode) {
+      alert("Please turn off the save mode before deleting.");
+      return;
+    }
+  
     try {
       const token = localStorage.getItem("token");
-      console.log("Deleting link with ID:", id); // Debugging
-      const response = await fetch(`http://localhost:3000/api/links/${id}`, {
+      console.log("Deleting entry:", id, "Type:", type);
+  
+      const response = await fetch(`http://localhost:3000/api/entries/${id}?type=${type}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -117,20 +132,62 @@ const Profile = () => {
       });
   
       const data = await response.json();
-      console.log("Delete response:", data); // Debugging
+      console.log("Delete response:", data);
+  
       if (data.success) {
-        setLinks(links.filter((link) => link._id !== id)); // Update the state to remove the deleted link
+        setLinks(links.filter((link) => link._id !== id)); // Update the state
       } else {
-        console.error("Failed to delete link:", data.message);
-        alert("Failed to delete link. Please try again.");
+        console.error("Failed to delete:", data.message);
+        alert("Failed to delete. Please try again.");
       }
     } catch (error) {
-      console.error("Error deleting link:", error);
-      alert("An error occurred while deleting the link. Please try again.");
+      console.error("Error deleting:", error);
+      alert("An error occurred while deleting. Please try again.");
     }
   };
+  
   const filteredLinks = links.filter(link => showLinks ? link.type === "link" : link.type === "shop");
 
+  const handleLinkClick = async (linkId, type) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Unauthorized. Please log in.");
+        return;
+      }
+  
+      // Send request to API to increment clicks
+      const response = await fetch("http://localhost:3000/api/increment-clicks", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ linkId, type }),
+      });
+  
+      const data = await response.json();
+      
+      if (!data.success) {
+        console.error("Error incrementing clicks:", data.message);
+        return;
+      }
+  
+      // ✅ Update click count in the state
+      setLinks((prevLinks) =>
+        prevLinks.map((link) =>
+          link._id === linkId ? { ...link, clicks: (link.clicks || 0) + 1 } : link
+        )
+      );
+    } catch (error) {
+      console.error("Error tracking click:", error);
+    }
+  };
+
+  const handlePhoneHeaderColorChange = (e) => {
+    setPhoneHeaderColor(e.target.value); // ✅ Updates Phone Header in real-time
+  };
+  
   return (
     <div className="profile-container">
       <h3 className="bannp">Profile</h3>
@@ -153,7 +210,13 @@ const Profile = () => {
           <div>
             <div className="biopart">
               <label>Bio</label>
-              <textarea placeholder="Add bio here" className="bioarea"></textarea>
+              <textarea
+                placeholder="Add bio here"
+                className="bioarea"
+                value={bio} 
+                onChange={(e) => setBio(e.target.value)} // ✅ Updates in real-time
+              ></textarea>
+
               <p className="bio-count">0 / 80</p>
             </div>
           </div>
@@ -203,7 +266,12 @@ const Profile = () => {
                   </button>
                 </div> 
                 <div className="link-url">
-                  <a href={link.url} target="_blank" rel="noopener noreferrer">
+                  <a 
+                    href={link.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    onClick={() => handleLinkClick(link._id, link.type)}
+                  >
                     {link.url}
                   </a>
                   <button 
@@ -232,16 +300,17 @@ const Profile = () => {
                   <span className="slider round"></span>
                 </label>
                 <button 
-                  onClick={() => {
-                    if (link.saveMode) {
-                      alert("Please turn off the save mode for this link to delete.");
-                    } else {
-                      deleteLink(link._id);
-                    }
-                  }}
-                >
-                  <img src="del.png" alt="Delete" />
-                </button>
+  onClick={() => {
+    if (link.saveMode) {
+      alert("Please turn off the save mode for this link to delete.");
+    } else {
+      deleteLink(link._id, link.type); // ✅ Pass the type here
+    }
+  }}
+>
+  <img src="del.png" alt="Delete" />
+</button>
+
               </div>
             </li>
           ))}
@@ -251,28 +320,39 @@ const Profile = () => {
       <h3 className="bann">Banner</h3>
       <div className="banner-card">
         <div className="banner-preview">
-          <div className="banner">
+          <div className="banner"  style={{ backgroundColor: phoneHeaderColor }}>
             <img src="bannerpic.png" alt="User Avatar" className="banner-pic" />
-            <h4 className="aname">@opopo_08</h4>
-            <p className="sname">/opopo_08</p>
+            <h4 className="aname">@{username}</h4>
+            <p className="sname">{bio}</p>
           </div>
         </div>
 
         <div className="bg-selector">
           <p>Custom Background Color</p>
           <div className="color-options">
-            <span className="color-circle black"></span>
-            <span className="color-circle white"></span>
-            <span className="color-circle brown"></span>
+            <span className="color-circle black" onClick={() => setPhoneHeaderColor("#000000")}></span>
+            <span className="color-circle white" onClick={() => setPhoneHeaderColor("#FFFFFF")}></span>
+            <span className="color-circle brown" onClick={() => setPhoneHeaderColor("#A52A2A")}></span>
           </div>
-          <div className="color-picker">
-            <div className="color-box" style={{ backgroundColor: color }} onClick={() => document.getElementById("colorInput").click()}></div>
-            <input type="color" id="colorInput" value={color} onChange={handleColorChange} className="hidden-color-input" />
-            <input type="text" value={color} className="color-code" />
+          <div className="color-picker-p">
+          <div className="color-box" 
+             style={{ backgroundColor: phoneHeaderColor }} 
+             onClick={() => document.getElementById("phoneHeaderColorInput").click()}></div>
+            <input type="color" 
+               id="phoneHeaderColorInput" 
+               value={phoneHeaderColor} 
+               onChange={handlePhoneHeaderColorChange} 
+               className="hidden-color-input" />
+        <input type="text" value={phoneHeaderColor} className="color-code" readOnly />
           </div>
+          
         </div>
+        
       </div>
 
+      <div className="save-part">
+        <button className="save_btn"> Save</button>
+      </div>
       {showAddModal && (
         <AddModal 
           closeModal={() => setShowAddModal(false)} 
@@ -296,6 +376,7 @@ const Profile = () => {
           updateEntry={updateEntry} 
         />
       )}
+      
     </div>
   );
 };

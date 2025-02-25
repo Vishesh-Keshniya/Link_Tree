@@ -6,6 +6,7 @@ const EditModal = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) =
   const [linkUrl, setLinkUrl] = useState("");
   const [currentTab, setCurrentTab] = useState(activeTab || "link");
   const [selectedApp, setSelectedApp] = useState("");
+  const [selectedIcon, setSelectedIcon] = useState(""); // New state for icon
   const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -17,6 +18,7 @@ const EditModal = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) =
       setLinkTitle(entry.title || "");
       setLinkUrl(entry.url || "");
       setSelectedApp(entry.tag || "");
+      setSelectedIcon(entry.icon || ""); // Load icon if available
       setCurrentTab(entry.type || "link");
       setIsEnabled(entry.enabled || false);
     }
@@ -48,6 +50,7 @@ const EditModal = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) =
       title: linkTitle,
       url: linkUrl,
       tag: selectedApp,
+      icon: selectedIcon, // Include icon in update
       type: currentTab,
       enabled: isEnabled,
     };
@@ -76,42 +79,6 @@ const EditModal = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) =
     }
   };
 
-  // **Handle adding a new entry**
-  const handleAdd = async () => {
-    if (!validateForm()) return;
-
-    const newEntry = {
-      title: linkTitle,
-      url: linkUrl,
-      tag: selectedApp,
-      type: currentTab,
-      enabled: isEnabled,
-    };
-
-    try {
-      const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:3000/api/add-entry", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(newEntry),
-      });
-
-      const data = await response.json();
-      if (data.success) {
-        addNewEntry(newEntry);
-        alert("Entry added successfully!");
-        closeModal();
-      } else {
-        alert("Failed to add entry: " + data.message);
-      }
-    } catch (error) {
-      console.error("Error adding entry:", error);
-    }
-  };
-
   return (
     <div className="modal-overlay-edit" onClick={handleOverlayClick}>
       <div className="modal-container-edit">
@@ -119,36 +86,22 @@ const EditModal = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) =
           <button className={`tab-btn-edit ${currentTab === "link" ? "active" : ""}`} onClick={() => setCurrentTab("link")}>
             <img src="addlink.png" alt="Add Link" /> Add Link
           </button>
-          
         </div>
 
         <div className="modal-content-edit">
           <h3>Edit Entry Social Links</h3>
 
           <form>
-          
             <div className="link-title-edit">
-            <div className="dj">
               <input
                 className="ip-edit"
                 type="text"
                 placeholder="Title"
-                value={linkTitle} 
+                value={linkTitle}
                 onChange={(e) => setLinkTitle(e.target.value)}
                 required
               />
             </div>
-            <div className="toggle-container-edit">
-                <label className="switch-edit">
-                  <input
-                    type="checkbox"
-                    checked={isEnabled}
-                    onChange={isEditing ? handleUpdate : handleAdd} // Handle toggle
-                  />
-                  <span className="slider"></span>
-                </label>
-              </div>
-              </div>
 
             <div className="link-title-edit">
               <input
@@ -168,7 +121,10 @@ const EditModal = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) =
                   <button
                     type="button"
                     className={`ic-btn-edit ${selectedApp === app ? "selected" : ""}`}
-                    onClick={() => setSelectedApp(app)}
+                    onClick={() => {
+                      setSelectedApp(app);
+                      setSelectedIcon(`${app.toLowerCase()}.png`); // Update icon based on selection
+                    }}
                   >
                     <img src={`${app.toLowerCase()}.png`} alt={app} />
                   </button>
@@ -180,7 +136,16 @@ const EditModal = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) =
             {error && <p className="error-message-edit">{error}</p>}
           </form>
 
-        
+          <div className="toggle-container-edit">
+            <label className="switch-edit">
+              <input
+                type="checkbox"
+                checked={isEnabled}
+                onChange={isEditing ? handleUpdate : null} // Handle toggle
+              />
+              <span className="slider"></span>
+            </label>
+          </div>
         </div>
       </div>
     </div>

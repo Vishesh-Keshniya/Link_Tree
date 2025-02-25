@@ -4,8 +4,9 @@ import "./EditModal.css";
 const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) => {
   const [linkTitle, setLinkTitle] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
-  const [currentTab, setCurrentTab] = useState(activeTab || "link");
+  const [currentTab, setCurrentTab] = useState(activeTab || "shop");
   const [selectedApp, setSelectedApp] = useState("");
+  const [selectedIcon, setSelectedIcon] = useState(""); // New state for icon
   const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isEnabled, setIsEnabled] = useState(false);
@@ -17,7 +18,8 @@ const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry 
       setLinkTitle(entry.title || "");
       setLinkUrl(entry.url || "");
       setSelectedApp(entry.tag || "");
-      setCurrentTab(entry.type || "link");
+      setSelectedIcon(entry.icon || "default.png"); // Load icon if available
+      setCurrentTab(entry.type || "shop");
       setIsEnabled(entry.enabled || false);
     }
   }, [entry]);
@@ -48,6 +50,7 @@ const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry 
       title: linkTitle,
       url: linkUrl,
       tag: selectedApp,
+      icon: selectedIcon, // Include icon in update
       type: currentTab,
       enabled: isEnabled,
     };
@@ -84,6 +87,7 @@ const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry 
       title: linkTitle,
       url: linkUrl,
       tag: selectedApp,
+      icon: selectedIcon, // Include selected icon
       type: currentTab,
       enabled: isEnabled,
     };
@@ -116,8 +120,10 @@ const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry 
     <div className="modal-overlay-edit" onClick={handleOverlayClick}>
       <div className="modal-container-edit">
         <div className="tab-container-edit">
-         
-          <button className={`tab-btn-edit ${currentTab === "shop" ? "active" : ""}`} onClick={() => setCurrentTab("shop")}>
+          <button
+            className={`tab-btn-edit ${currentTab === "shop" ? "active" : ""}`}
+            onClick={() => setCurrentTab("shop")}
+          >
             <img src="addlink.png" alt="Add Shop" /> Add Shop
           </button>
         </div>
@@ -126,19 +132,18 @@ const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry 
           <h3>Edit Shop Links</h3>
 
           <form>
-          
             <div className="link-title-edit">
-            <div className="dj">
-              <input
-                className="ip-edit"
-                type="text"
-                placeholder="Title"
-                value={linkTitle} 
-                onChange={(e) => setLinkTitle(e.target.value)}
-                required
-              />
-            </div>
-            <div className="toggle-container-edit">
+              <div className="dj">
+                <input
+                  className="ip-edit"
+                  type="text"
+                  placeholder="Title"
+                  value={linkTitle}
+                  onChange={(e) => setLinkTitle(e.target.value)}
+                  required
+                />
+              </div>
+              <div className="toggle-container-edit">
                 <label className="switch-edit">
                   <input
                     type="checkbox"
@@ -148,7 +153,7 @@ const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry 
                   <span className="slider"></span>
                 </label>
               </div>
-              </div>
+            </div>
 
             <div className="link-title-edit">
               <input
@@ -163,12 +168,15 @@ const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry 
 
             <h4>Applications <span className="required">*</span></h4>
             <div className="app-grid-edit">
-              {["Swiggi", "zomato", "flipkart", "other"].map((app) => (
+              {["Swiggi", "Zomato", "Flipkart", "Other"].map((app) => (
                 <div className="modal-ic-edit" key={app}>
                   <button
                     type="button"
                     className={`ic-btn-edit ${selectedApp === app ? "selected" : ""}`}
-                    onClick={() => setSelectedApp(app)}
+                    onClick={() => {
+                      setSelectedApp(app);
+                      setSelectedIcon(`${app.toLowerCase()}.png`); // Update icon based on selection
+                    }}
                   >
                     <img src={`${app.toLowerCase()}.png`} alt={app} />
                   </button>
@@ -179,8 +187,6 @@ const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry 
 
             {error && <p className="error-message-edit">{error}</p>}
           </form>
-
-        
         </div>
       </div>
     </div>

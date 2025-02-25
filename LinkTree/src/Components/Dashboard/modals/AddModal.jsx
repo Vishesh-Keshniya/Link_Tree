@@ -18,48 +18,58 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
 
   // Function to handle form submission
   const handleSubmit = async () => {
-    // Validate that an application is selected
     if (!selectedApp) {
       setError("Please select an application.");
       return;
     }
-
-    // Validate that title and URL are filled
+  
     if (!linkTitle || !linkUrl) {
       setError("Please fill in all fields.");
       return;
     }
-
+  
+    const iconMap = {
+      Instagram: "instr.png",
+      Facebook: "fb.png",
+      YouTube: "ytr.png",
+      X: "x.png",
+      Swiggi: "swiggi.png",
+      Flipkart: "flipkart.png",
+      Zomato: "zomato.png",
+      Other: "shop.png",
+    };
+  
     const entry = {
       title: linkTitle,
       url: linkUrl,
       type: currentTab, // 'link' or 'shop'
-      tag: selectedApp, // Include the selected application name
+      tag: selectedApp,
+      icon: iconMap[selectedApp] || "default.png", // Store icon based on selection
     };
-
+  
     try {
-      const token = localStorage.getItem("token"); // Retrieve the token
+      const token = localStorage.getItem("token");
       if (!token) {
         setError("Unauthorized. Please log in.");
         return;
       }
-
+  
       const response = await fetch("http://localhost:3000/api/add-entry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`, // Include the token in the headers
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(entry),
       });
-
+  
       const data = await response.json();
-
+  
       if (data.success) {
-        // Add the new entry to the parent component's state
-        addNewEntry(entry);
+        addNewEntry(entry); // Add the new entry to the parent state
         alert("Entry added successfully!");
-        closeModal();
+        closeModal(); // Close the modal
+        window.location.reload(); // Refresh the page
       } else {
         alert("Failed to add entry: " + data.message);
       }
@@ -68,7 +78,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
       alert("An error occurred while adding the entry.");
     }
   };
-
+  
   // Function to handle toggle switch change
   const handleToggleChange = () => {
     setIsEnabled(!isEnabled);

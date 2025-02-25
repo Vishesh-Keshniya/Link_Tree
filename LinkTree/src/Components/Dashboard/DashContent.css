@@ -37,6 +37,9 @@
     width: 100%;
   }
   /* Mobile Preview */
- 
+ .mobile-preview
+ {
+  height: 100%;
+ }
   
   

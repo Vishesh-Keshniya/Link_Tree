@@ -151,3 +151,15 @@ input:checked + .slider-edit::before {
     color: black;
     padding-bottom: 10px;
 }
+
+.ic-btn.selected
+{
+    background: #bdbdbd;
+    
+}
+
+.ic-btn-edit.selected
+{
+    background: #bdbdbd;
+    
+}

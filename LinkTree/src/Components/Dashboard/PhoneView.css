@@ -1,13 +1,5 @@
     /* Phone Container */
-.phone-container {
-    width: 250px;
-    background:#f8f8f8;
-    height: 500px;
-    border-radius: 30px;
-    text-align: center;
-    border: 10px solid black;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-  }
+
   .phonetitle
   {
    padding-bottom: 10px;
@@ -55,17 +47,25 @@
   .phone-buttons {
     display: flex;
     justify-content: center;
-   background: #D3D3D3;
-    margin-top: 10px;
-    margin-left: 60px;
-    margin-right: 60px;
+    
     border-radius: 20px;
+    margin-top: 10px;
 
   }
+  .phone-midd
+  {
+   
+  }
   
+  .link-item a{
+    color: black;
+    text-decoration: none;
+    font-size: 20px;
+    
+  }
   .btn-link {
-    background: green;
-    color: white;
+    background: lightgray;
+    color: rgb(0, 0, 0);
     padding: 5px 15px;
     border-radius: 20px;
     border: none;
@@ -85,19 +85,44 @@
     color: white;
 
   }
-  
+
+  .linksss
+  {
+    display: flex;
+   gap: 5px;
+
+    padding: 0;
+    
+  }
+
+  .licon
+  {
+   background: none;
+   padding-left: 2px;
+   padding-top: 5px;
+   padding-bottom: 2px;
+   border-radius: 60px;
+   background: white;
+   width: 100%;
+   height: 100%;
+   
+ 
+  }
+
   /* Links */
   .phone-links {
     margin-top: 15px;
     padding-left: 10px;
     padding-right: 10px;
+    flex-grow: 1; /* Allows it to expand without pushing the connect section */
+    overflow-y: auto; /* Enables scrolling if too many links */
   }
   
   .link-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #f0f0f0;
+    background: #C9C9C9;
     padding: 10px;
     border-radius: 20px;
     margin: 5px 0;
@@ -127,4 +152,93 @@
   .phone-connect
   {
     padding-top: 80px;
+    position: absolute;
   }
+
+  /* Phone Container */
+.phone-container {
+  width: 300px;
+  background: #f8f8f8;
+  height: 550px;
+  border-radius: 30px;
+  text-align: center;
+  border: 10px solid black;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  
+  /* Ensures the child elements are positioned properly */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Pushes .phone-connect to the bottom */
+  overflow: hidden;
+}
+
+/* Profile Section */
+.phone-profile {
+  background: #3d2f23;
+  border-radius: 20px;
+
+}
+
+/* Connect Button Wrapper - Ensures it stays fixed */
+.phone-connect {
+  padding: 15px 0;
+  position: relative; /* Ensures it doesn't move unexpectedly */
+  bottom: 0; /* Keeps it at the bottom */
+  text-align: center;
+  margin-bottom: -30px;
+}
+.phone-bio{
+  color: rgb(134, 129, 129);
+}
+
+.phone-links::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.phone-buttons button.active {
+  background-color: #28A263; /* Green color when active */
+  color: white;
+  font-weight: bold;
+}
+
+.phone-buttons button:hover
+{
+  background-color: #28A263; /* Green color when hovering */
+  color: white;
+}
+
+.link-item.shop {
+  background: #D9D9D9; /* Light red background */
+ /* Orange border */
+  display: flex;
+  flex-direction: column;
+}
+.link-item.shop .linksss{
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.link-item.shop .licon 
+{
+padding-left: 90px;
+padding-right: 90px;
+padding-top: 20px;
+padding-bottom: 20px;
+border-radius: 10px;
+
+
+}
+.link-item.shop .licon img{
+  width: 100%;
+}
+
+.link-item .licon img{
+  width: 60%;
+}
+
+.link-item span{
+  margin-top: 6px;
+  padding-left: 10px;
+}
