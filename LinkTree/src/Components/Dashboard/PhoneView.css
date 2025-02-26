@@ -52,17 +52,15 @@
     margin-top: 10px;
 
   }
-  .phone-midd
-  {
-   
-  }
-  
+
   .link-item a{
     color: black;
     text-decoration: none;
     font-size: 20px;
     
   }
+
+  
   .btn-link {
     background: lightgray;
     color: rgb(0, 0, 0);
@@ -116,16 +114,19 @@
     padding-right: 10px;
     flex-grow: 1; /* Allows it to expand without pushing the connect section */
     overflow-y: auto; /* Enables scrolling if too many links */
+    transition: 0.3s ease-in-out;
   }
   
   .link-item {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #C9C9C9;
+    background: #e7e7e7;
     padding: 10px;
-    border-radius: 20px;
+    
     margin: 5px 0;
+    width: 100%;
+    
   }
   
   .link-item img {
@@ -213,6 +214,7 @@
  /* Orange border */
   display: flex;
   flex-direction: column;
+  border: none;
 }
 .link-item.shop .linksss{
   display: flex;
@@ -242,3 +244,214 @@ border-radius: 10px;
   margin-top: 6px;
   padding-left: 10px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+.phone-links.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.phone-links.grid .linksss {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.phone-links.grid .link-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+
+.phone-links.carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.phone-links.carousel .linksss {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+  max-width: 160px;
+}
+
+.phone-links.carousel .link-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
+  text-align: center;
+}
+
+
+.phone-links.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.phone-links.grid .linksss {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.phone-links.grid .link-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 90%;
+}
+
+
+.phone-links.carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 12px;
+  white-space: nowrap;
+}
+
+.phone-links.carousel .linksss {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 120px;
+  max-width: 160px;
+}
+
+.phone-links.carousel .link-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 80%;
+  text-align: center;
+}
+
+
+/* 🔹 General Styling for Shop Links */
+/* 🔹 Shop Grid Layout */
+.phone-links.grid .shop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background:#D9D9D9;
+ 
+  padding: 12px;
+  width: 100%;
+}
+
+/* 🔹 Fix .licon to Remove Extra Padding */
+.phone-links.grid .shop .licon {
+  width: 100%;
+  height: auto;
+  background: white;
+  border-radius: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 0; /* Removes extra spacing */
+  padding: 0; /* Removes unnecessary padding */
+}
+
+/* 🔹 Ensure Image Fills the Space */
+.phone-links.grid .shop .licon img {
+  width: 50%;
+  height: auto;
+  object-fit: contain; /* Ensures full image visibility without cropping */
+}
+
+/* 🔹 Shop Title */
+.phone-links.grid .shop .link-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  margin-top: 8px;
+}
+
+/* 🔹 Shop Links - Carousel Layout */
+.phone-links.carousel .shop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+  padding: 10px;
+  background: #D9D9D9;
+  border-radius: 12px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+.phone-links.carousel .shop .licon {
+  width: 60px;
+  height: 60px;
+  background: white;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+/* 🔹 Shop Button Styling */
+.shop-now-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ff0000;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+  width: 100%;
+  max-width: 140px;
+}
+
+.shop-now-btn:hover {
+  background: #224f0a;
+}
+
+

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./PhoneView.css";
 
-const PhoneView = ({ bio, phoneHeaderColor }) => {
+const PhoneView = ({ bio, phoneHeaderColor, layout,shadowStyle,borderStyle,buttonStyle }) => {
   const [links, setLinks] = useState([]);
   const [shopLinks, setShopLinks] = useState([]);
   const [showShopLinks, setShowShopLinks] = useState(false);
@@ -105,18 +105,23 @@ const PhoneView = ({ bio, phoneHeaderColor }) => {
         </button>
       </div>
 
-      {/* Links Section */}
-      <ul className="phone-links">
+      <ul className={`phone-links ${layout}`}>
   {(showShopLinks ? shopLinks : links).length > 0 ? (
     (showShopLinks ? shopLinks : links).map((link, index) => (
-      <li className={`link-item ${showShopLinks ? "shop" : ""}`} key={index}>
+      <li className={`link-item ${showShopLinks ? "shop" : ""} ${shadowStyle} ${borderStyle} ${buttonStyle}`} key={index}>
         <a href={link.url} target="_blank" rel="noopener noreferrer">
           <div className="linksss">
             <div className="licon">
               <img src={link.icon} alt={link.title || "Website"} />
             </div>
-            <span>
-              {link.title?.length > 10 ? link.title.slice(0, 15) + "..." : link.title || "Website Link"}
+            <span className="link-title">
+              {link.title
+                ? link.title.length < 5
+                  ? link.title.padEnd(5, " ") // Ensure at least 5 letters
+                  : link.title.length > 10
+                  ? link.title.slice(0, 12) + "..." // Truncate long titles
+                  : link.title
+                : "Website Link"}
             </span>
           </div>
         </a>
@@ -124,7 +129,8 @@ const PhoneView = ({ bio, phoneHeaderColor }) => {
         {/* ✅ "Shop Now" Button (Only for Shop Links) */}
         {showShopLinks && (
           <button className="shop-now-btn" onClick={() => window.open(link.url, "_blank")}>
-          <div><img src="shopg.png"></img></div><div>Buy Now</div>
+            <div><img src="shopg.png" alt="Shop Icon" /></div>
+            <div>Buy Now</div>
           </button>
         )}
       </li>
@@ -133,6 +139,7 @@ const PhoneView = ({ bio, phoneHeaderColor }) => {
     <p>Add {showShopLinks ? "shop" : "regular"} links</p>
   )}
 </ul>
+
 
 
       {/* Connect Button */}

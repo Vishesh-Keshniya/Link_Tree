@@ -8,6 +8,10 @@ const DashContent = ({ activeSection }) => {
   const [fullName, setFullName] = useState("");
   const [bio, setBio] = useState("");
   const [phoneHeaderColor, setPhoneHeaderColor] = useState("#3d2f23");
+  const [layout, setLayout] = useState("stack");
+  const [shadowStyle, setShadowStyle] = useState("shadow-soft");
+  const [borderStyle, setBorderStyle] = useState("border-rounded");
+  const [buttonStyle, setButtonStyle] = useState("button-fill"); // ✅ Manage button styles
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -52,22 +56,45 @@ const DashContent = ({ activeSection }) => {
         {activeSection === "Links" && (
           <>
             <div className="mobile-preview">
-              <PhoneView bio={bio} phoneHeaderColor={phoneHeaderColor} />
+              <PhoneView 
+                bio={bio} 
+                phoneHeaderColor={phoneHeaderColor} 
+                layout={layout} 
+                shadowStyle={shadowStyle}
+                borderStyle={borderStyle}
+                buttonStyle={buttonStyle} // ✅ Pass button style
+              />
             </div>
             <div className="profile-section">
-              <Profile bio={bio} setBio={setBio} phoneHeaderColor={phoneHeaderColor} setPhoneHeaderColor={setPhoneHeaderColor} />
+              <Profile 
+                bio={bio} 
+                setBio={setBio} 
+                phoneHeaderColor={phoneHeaderColor} 
+                setPhoneHeaderColor={setPhoneHeaderColor} 
+              />
             </div>
           </>
         )}
 
-        {/* ✅ Now, Appearance also includes PhoneView */}
         {activeSection === "Appearance" && (
           <>
             <div className="mobile-preview">
-              <PhoneView bio={bio} phoneHeaderColor={phoneHeaderColor} />
+              <PhoneView 
+                bio={bio} 
+                phoneHeaderColor={phoneHeaderColor} 
+                layout={layout} 
+                shadowStyle={shadowStyle}
+                borderStyle={borderStyle}
+                buttonStyle={buttonStyle} // ✅ Apply selected button style
+              />
             </div>
             <div className="profile-section">
-              <Appearance />
+              <Appearance 
+                setLayout={setLayout} 
+                setShadowStyle={setShadowStyle}
+                setBorderStyle={setBorderStyle}
+                setButtonStyle={setButtonStyle} // ✅ Pass button style setter
+              />
             </div>
           </>
         )}

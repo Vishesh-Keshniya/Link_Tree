@@ -110,33 +110,33 @@
   
   /* Fill Buttons */
   .button-fill.solid {
-    background: black;
+   
+    color: #f7f7f7;
   
   }
   
   .button-fill.solid-round {
-    background: black;
-    border-radius:5px;
+   
+    border-radius:10px;
   }
   
   .button-fill.outlined-round {
-    background: black;
-    border: 3px solid white;
-    border-radius: 20px;
+   
+    border-radius: 50px;
 
   }
   
   /* Outline Buttons */
-  .button-row .button-outline {
+.button-outline {
     border: 1px solid black;
   }
   
-  .button-row .button-outline-round {
+ .button-outline-round {
     border: 1px solid black;
     border-radius: 5px;
   }
   
-  .button-row .button-outline-thick {
+.button-outline-thick {
     border: 1px solid black;
     border-radius: 20px;
   }
@@ -178,16 +178,8 @@
   
  /* Special Buttons */
  .button-special-wavy {
-    background: black;
-    height: 40px;
-    width: 180px;
-    border: none;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    line-height: 40px;
-    position: relative;
-    overflow: hidden;
+   
+    
     
     /* Softer jagged edges */
     clip-path: polygon(
@@ -217,15 +209,7 @@
   
   
   .button-special-zigzag {
-    background: black;
-    height: 40px;
-    width: 180px;
-    border: none;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    line-height: 40px;
-    position: relative;
+   
     
     /* Curvy Zigzag Shape */
     clip-path: polygon(
@@ -239,33 +223,22 @@
   }
   
   .button-special-double-outline {
-    background: transparent;
-    height: 40px;
-    width: 200px;
+   
     border: 3px solid black;
-    position: relative;
-    color: black;
-    font-weight: bold;
-    text-align: center;
-    line-height: 40px;
-    display: inline-block;
-    overflow: hidden;
+    
+   
   }
+
+  
   
   /* Adding the second outline */
   .button-special-double-outline::before {
-    content: "";
-    position: absolute;
-    top: -5px;  /* Adjusts position above */
-    left: -10px;
-    right: -10px;
-    bottom: -5px; /* Adjusts position below */
+   
     border: 3px solid black;
   }
   
   .button-special-double-outline::before {
-    content: "";
-    position: absolute;
+    
     top: 4px;
     left: 4px;
     right: 4px;
@@ -318,17 +291,13 @@
   
   
   .button-special-filled {
-    background: black;
+   
     border: 2px solid white;
-    color: white;
-    font-weight: bold;
-    text-align: center;
-    padding: 10px 20px;
-    display: inline-block;
+   
     
     /* Apply border-radius only to the right side */
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
   }
   
   .textss{
@@ -395,3 +364,5 @@
   font-weight: 600;
   color: #333;
 }
+
+
