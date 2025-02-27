@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "./PhoneView.css";
 
-const PhoneView = ({ bio, phoneHeaderColor, layout,shadowStyle,borderStyle,buttonStyle }) => {
+const PhoneView = ({ bio, phoneHeaderColor, layout, shadowStyle, borderStyle, buttonStyle, linkBgColor, linkFontColor, font, phoneFontColor, selectedTheme ,selectedLiTheme    }) => {
+
   const [links, setLinks] = useState([]);
   const [shopLinks, setShopLinks] = useState([]);
   const [showShopLinks, setShowShopLinks] = useState(false);
@@ -78,19 +79,20 @@ const PhoneView = ({ bio, phoneHeaderColor, layout,shadowStyle,borderStyle,butto
   }, [showShopLinks]);
 
   return (
-    <div className="phone-container">
+   <div className={`phone-container ${selectedTheme}`} style={{ fontFamily: font, color: phoneFontColor }}>
+
       {/* Profile Section */}
-      <div className="phone-profile" style={{ backgroundColor: phoneHeaderColor }}>
+      <div className={`phone-profile ${selectedTheme}`} style={{ backgroundColor: phoneHeaderColor }}>
         <div className="phone-header">
           <button className="share-btn-ph"><img src="shareicon.png" alt="Share" /></button>
         </div>
         <img src="ava.png" alt="User Avatar" className="profile-img" />
-        <h3 className="phonetitle">@{userName || "User"}</h3>
-        <p className="phone-bio">{bio}</p>
+        <h3 className="phonetitle"  style={{ fontFamily: font ,color: phoneFontColor  }}>@{userName || "User"}</h3>
+        <p className="phone-bio"  style={{ fontFamily: font ,color: phoneFontColor  }}>{bio}</p>
       </div>
 
       {/* Navigation Buttons */}
-      <div className="phone-buttons">
+      <div className="phone-buttons" >
         <button
           className={`btn-link ${!showShopLinks ? "active" : ""}`}
           onClick={() => setShowShopLinks(false)}
@@ -105,16 +107,16 @@ const PhoneView = ({ bio, phoneHeaderColor, layout,shadowStyle,borderStyle,butto
         </button>
       </div>
 
-      <ul className={`phone-links ${layout}`}>
+      <ul className={`phone-links ${layout}`} >
   {(showShopLinks ? shopLinks : links).length > 0 ? (
     (showShopLinks ? shopLinks : links).map((link, index) => (
-      <li className={`link-item ${showShopLinks ? "shop" : ""} ${shadowStyle} ${borderStyle} ${buttonStyle}`} key={index}>
-        <a href={link.url} target="_blank" rel="noopener noreferrer">
+      <li className={`link-item ${showShopLinks ? "shop" : ""} ${selectedLiTheme} ${shadowStyle} ${borderStyle} ${buttonStyle} ${selectedTheme}`}    style={{ backgroundColor: linkBgColor }}key={index}>
+        <a href={link.url} target="_blank" rel="noopener noreferrer"style={{ backgroundColor: linkBgColor, color: linkFontColor }} >
           <div className="linksss">
             <div className="licon">
               <img src={link.icon} alt={link.title || "Website"} />
             </div>
-            <span className="link-title">
+            <span className="link-title"  style={{ color: linkFontColor }}>
               {link.title
                 ? link.title.length < 5
                   ? link.title.padEnd(5, " ") // Ensure at least 5 letters
@@ -144,8 +146,8 @@ const PhoneView = ({ bio, phoneHeaderColor, layout,shadowStyle,borderStyle,butto
 
       {/* Connect Button */}
       <div className="phone-connect">
-        <button className="connect-btn">Get Connected</button>
-        <p className="spark-logo"><img src="sparklogo.png" alt="Spark" /> SPARK</p>
+        <button className="connect-btn"  >Get Connected</button>
+        <p className="spark-logo"><img src="sparklogo.png" alt="Spark" style={{ fontFamily: font ,color: phoneFontColor  }} /> SPARK</p>
       </div>
     </div>
   );

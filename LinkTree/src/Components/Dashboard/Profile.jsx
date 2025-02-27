@@ -332,7 +332,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
           <div className="color-options">
             <span className="color-circle black" onClick={() => setPhoneHeaderColor("#000000")}></span>
             <span className="color-circle white" onClick={() => setPhoneHeaderColor("#FFFFFF")}></span>
-            <span className="color-circle brown" onClick={() => setPhoneHeaderColor("#A52A2A")}></span>
+            <span className="color-circle brown" onClick={() => setPhoneHeaderColor("#302600")}></span>
           </div>
           <div className="color-picker-p">
           <div className="color-box" 

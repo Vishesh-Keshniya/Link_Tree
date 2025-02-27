@@ -7,12 +7,21 @@ import Appearance from "../Appearance";
 const DashContent = ({ activeSection }) => {
   const [fullName, setFullName] = useState("");
   const [bio, setBio] = useState("");
-  const [phoneHeaderColor, setPhoneHeaderColor] = useState("#3d2f23");
+  const [phoneHeaderColor, setPhoneHeaderColor] = useState("#000000");
   const [layout, setLayout] = useState("stack");
   const [shadowStyle, setShadowStyle] = useState("shadow-soft");
   const [borderStyle, setBorderStyle] = useState("border-rounded");
-  const [buttonStyle, setButtonStyle] = useState("button-fill"); // ✅ Manage button styles
+  const [buttonStyle, setButtonStyle] = useState("button-fill");
+  const [linkBgColor, setLinkBgColor] = useState("");
+  const [linkFontColor, setLinkFontColor] = useState("#000000");
+  const [font, setFont] = useState("DM Sans");
+  const [phoneFontColor, setPhoneFontColor] = useState("#D9D9D9");
 
+  // Default theme settings
+  const [selectedTheme, setSelectedTheme] = useState("air-snow"); 
+  const [selectedLiTheme, setSelectedLiTheme] = useState("airsnowli");
+
+  // Fetch user data from backend
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -21,9 +30,7 @@ const DashContent = ({ activeSection }) => {
 
         const response = await fetch("http://localhost:3000/api/user-details", {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         const data = await response.json();
@@ -52,17 +59,25 @@ const DashContent = ({ activeSection }) => {
         </button>
       </div>
 
+      {/* Dashboard Content */}
       <div className="dashboard-content">
+        {/* Links Section */}
         {activeSection === "Links" && (
           <>
             <div className="mobile-preview">
               <PhoneView 
-                bio={bio} 
+                bio={bio}
                 phoneHeaderColor={phoneHeaderColor} 
                 layout={layout} 
                 shadowStyle={shadowStyle}
                 borderStyle={borderStyle}
-                buttonStyle={buttonStyle} // ✅ Pass button style
+                buttonStyle={buttonStyle}
+                linkBgColor={linkBgColor}
+                linkFontColor={linkFontColor}
+                font={font}
+                phoneFontColor={phoneFontColor} 
+                selectedTheme={selectedTheme}
+                selectedLiTheme={selectedLiTheme} // ✅ Pass `selectedLiTheme`
               />
             </div>
             <div className="profile-section">
@@ -76,16 +91,23 @@ const DashContent = ({ activeSection }) => {
           </>
         )}
 
+        {/* Appearance Section */}
         {activeSection === "Appearance" && (
           <>
             <div className="mobile-preview">
               <PhoneView 
-                bio={bio} 
+                bio={bio}
                 phoneHeaderColor={phoneHeaderColor} 
                 layout={layout} 
                 shadowStyle={shadowStyle}
                 borderStyle={borderStyle}
-                buttonStyle={buttonStyle} // ✅ Apply selected button style
+                buttonStyle={buttonStyle}
+                linkBgColor={linkBgColor}
+                linkFontColor={linkFontColor}
+                font={font}
+                phoneFontColor={phoneFontColor} 
+                selectedTheme={selectedTheme}
+                selectedLiTheme={selectedLiTheme} // ✅ Pass `selectedLiTheme`
               />
             </div>
             <div className="profile-section">
@@ -93,12 +115,19 @@ const DashContent = ({ activeSection }) => {
                 setLayout={setLayout} 
                 setShadowStyle={setShadowStyle}
                 setBorderStyle={setBorderStyle}
-                setButtonStyle={setButtonStyle} // ✅ Pass button style setter
+                setButtonStyle={setButtonStyle}
+                setLinkBgColor={setLinkBgColor}
+                setLinkFontColor={setLinkFontColor}
+                setFont={setFont}
+                setPhoneFontColor={setPhoneFontColor} 
+                setSelectedTheme={setSelectedTheme} // ✅ Allow changing theme
+                setSelectedLiTheme={setSelectedLiTheme} // ✅ Allow changing `li` theme
               />
             </div>
           </>
         )}
 
+        {/* Other Sections */}
         {activeSection === "Analytics" && <h2>Analytics Section (Coming Soon)</h2>}
         {activeSection === "Settings" && <h2>Settings Section (Coming Soon)</h2>}
       </div>

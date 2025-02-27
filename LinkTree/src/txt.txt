@@ -1,0 +1,75 @@
+<h2 className="title">Theme</h2>
+
+<div className="theme-container">
+<button className="theme-button air-snow" onClick={() => handleThemeChange("air-snow")}>
+        <div className="theme-box">
+          <div className="design"></div>
+          <div className="design"></div>
+          <div className="design"></div>
+        </div>
+        <span className="theme-label">Air Snow</span>
+      </button>
+
+      <button className="theme-button air-grey" onClick={() => handleThemeChange("theme-button air-grey")}>
+        <div className="theme-box">
+          <div className="design"></div>
+          <div className="design"></div>
+          <div className="design"></div>
+        </div>
+        <span className="theme-label">Air Grey</span>
+      </button>
+
+      <button className="theme-button air-smoke"  onClick={() => handleThemeChange("theme-button air-smoke")}>
+        <div className="theme-box">
+          <div className="design"></div>
+          <div className="design"></div>
+          <div className="design"></div>
+        </div>
+        <span className="theme-label">Air Smoke</span>
+      </button>
+
+      <button className="theme-button air-black"  onClick={() => handleThemeChange("theme-button air-black")}>
+        <div className="theme-box">
+          <div className="design"></div>
+          <div className="design"></div>
+          <div className="design"></div>
+        </div>
+        <span className="theme-label">Air Black</span>
+      </button>
+
+      <button className="theme-button mineral-blue"  onClick={() => handleThemeChange("theme-button mineral-blue")}>
+        <div className="theme-box">
+          <div className="design"></div>
+          <div className="design"></div>
+          <div className="design"></div>
+        </div>
+        <span className="theme-label">Mineral Blue</span>
+      </button>
+
+      <button className="theme-button mineral-green" onClick={() => handleThemeChange("theme-button mineral-green")}>
+        <div className="theme-box">
+          <div className="design"></div>
+          <div className="design"></div>
+          <div className="design"></div>
+        </div>
+        <span className="theme-label">Mineral Green</span>
+      </button>
+
+      <button className="theme-button mineral-orange" onClick={() => handleThemeChange("theme-button mineral-orange")}>
+        <div className="theme-box">
+          <div className="design"></div>
+          <div className="design"></div>
+          <div className="design"></div>
+        </div>
+        <span className="theme-label">Mineral Orange</span>
+      </button>
+
+      <button className="theme-button mineral-yellow" onClick={() => handleThemeChange("theme-button mineral-yellow")}>
+        <div className="theme-box">
+          <div className="design"></div>
+          <div className="design"></div>
+          <div className="design"></div>
+        </div>
+        <span className="theme-label">Mineral Yellow</span>
+      </button>
+</div>
