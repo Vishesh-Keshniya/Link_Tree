@@ -26,6 +26,44 @@
 
 }
   
+.custom-file-input {
+  display: inline-block;
+  padding: 8px 15px;
+  background-color: #28A263;
+  color: white;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.custom-file-input::before {
+  content: 'Choose Image';
+  display: inline-block;
+  background-color: #28A263;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.custom-file-input:hover::before {
+  background-color: #1e7a50;
+}
+
+
+.banner-pic
+{
+  width: 100px;
+  border-radius: 50px;
+}
+
+
   .profile-img {
     width: 100px;
     border-radius: 50%;

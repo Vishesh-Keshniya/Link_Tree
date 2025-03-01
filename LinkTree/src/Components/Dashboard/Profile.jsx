@@ -4,28 +4,36 @@ import AddModal from "./modals/AddModal";
 import EditModal from "./modals/EditModal"; 
 import EditModalShop from "./modals/EditModalShop";
 
+
 const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
   const [color, setColor] = useState("#000000");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [showEditModalShop, setShowEditModalShop] = useState(false); // State for Shop edit modal
+  const [showEditModalShop, setShowEditModalShop] = useState(false);
   const [activeTab, setActiveTab] = useState("link"); 
   const [links, setLinks] = useState([]); 
-  const [showLinks, setShowLinks] = useState(() => {
-    return localStorage.getItem("activeTab") === "shop" ? false : true;
-  });
-  
+  const [showLinks, setShowLinks] = useState(() => localStorage.getItem("activeTab") !== "shop");
+  const [profileImage, setProfileImage] = useState("ava.png"); 
   const [username, setUsername] = useState(""); 
   const [editEntry, setEditEntry] = useState(null); 
   useEffect(() => {
     localStorage.setItem("activeTab", showLinks ? "link" : "shop");
   }, [showLinks]);
 
-
   useEffect(() => {
     fetchUserData();
   }, []);
 
+
+  useEffect(() => {
+    fetchUserData();
+    const storedImage = localStorage.getItem("profileImage");
+    if (storedImage) {
+      setProfileImage(storedImage);
+    }
+  }, []);
+
+  
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -37,18 +45,19 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
 
       const response = await fetch("http://localhost:3000/api/user", {
         method: "GET",
-        headers: {
-          "Authorization": `Bearer ${token}`,
-        },
+        headers: { "Authorization": `Bearer ${token}` },
       });
 
       const data = await response.json();
       if (data.success) {
-        setUsername(data.user.username);
-        setBio(data.user.bio || "");  // ✅ Update global bio state
+        setUsername(data.user.username || "");  // ✅ Ensure it's never null
+        setBio(data.user.bio || "");  // ✅ Ensure it's never null
+        setProfileImage(data.user.image || "ava.png"); 
+        setPhoneHeaderColor(data.user.settings.phoneHeaderColor || "#FFFFFF");
+
         const userLinks = [
-          ...data.user.addLinks.map(link => ({ ...link, type: "link", saveMode: false })), // Add saveMode property
-          ...data.user.addShop.map(shop => ({ ...shop, type: "shop", saveMode: false })) // Add saveMode property
+          ...data.user.addLinks.map(link => ({ ...link, type: "link", saveMode: false })), 
+          ...data.user.addShop.map(shop => ({ ...shop, type: "shop", saveMode: false }))
         ];
         setLinks(userLinks);
       } else {
@@ -62,6 +71,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
       console.error("Error fetching user data:", error);
     }
   };
+  
 
   const handleEditClick = (entry) => {
     if (entry.saveMode) {
@@ -187,6 +197,109 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
   const handlePhoneHeaderColorChange = (e) => {
     setPhoneHeaderColor(e.target.value); // ✅ Updates Phone Header in real-time
   };
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+  
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Unauthorized. Please log in.");
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append("image", file);
+  
+      const uploadRes = await fetch("http://localhost:3000/api/upload-profile-image", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData,
+      });
+  
+      const data = await uploadRes.json();
+      if (data.success) {
+        console.log("Uploaded Image URL:", data.image);
+        
+        // ✅ Store new image in local storage
+        localStorage.setItem("profileImage", data.image);
+  
+        // ✅ Refresh the page after image upload
+        window.location.reload();  // Force refresh after setting image
+      } else {
+        console.error("Image upload failed:", data);
+        alert("Image upload failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error uploading image:", error);
+    }
+  };
+  
+  const handleRemoveImage = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Unauthorized. Please log in.");
+        return;
+      }
+  
+      const response = await fetch("http://localhost:3000/api/remove-profile-image", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        },
+      });
+  
+      const data = await response.json();
+      if (data.success) {
+        console.log("Profile image removed successfully");
+  
+        // ✅ Reset profile image to default
+        setProfileImage("ava.png");
+  
+        // ✅ Remove from localStorage
+        localStorage.removeItem("profileImage");
+  
+        // ✅ Refresh the page
+        window.location.reload();
+      } else {
+        console.error("Failed to remove image:", data.message);
+        alert("Failed to remove image. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error removing image:", error);
+    }
+  };
+  
+
+  const handleSaveSettings = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Unauthorized. Please log in.");
+        return;
+      }
+
+      const response = await fetch("http://localhost:3000/api/update-settings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ phoneHeaderColor, bio }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        alert("Settings saved successfully!");
+      } else {
+        alert("Failed to save settings. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error saving settings:", error);
+    }
+  };
   
   return (
     <div className="profile-container">
@@ -194,11 +307,18 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
       <div className="profile-card">
         <div className="profile-header">
           <div>
-            <img src="ava.png" alt="User Avatar" className="profile-img" />
+          <img src={profileImage} alt="User Avatar" className="profile-img" />
           </div>
           <div className="profile-header-btn">
-            <button className="pick-image">Pick an image</button>
-            <button className="remove-btn">Remove</button>
+          <input
+  type="file"
+  accept="image/*"
+  className="custom-file-input"
+  onChange={handleImageUpload}
+/>
+
+
+            <button className="remove-btn" onClick={handleRemoveImage}>Remove</button>
           </div>
         </div>
 
@@ -321,7 +441,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
       <div className="banner-card">
         <div className="banner-preview">
           <div className="banner"  style={{ backgroundColor: phoneHeaderColor }}>
-            <img src="bannerpic.png" alt="User Avatar" className="banner-pic" />
+            <img src={profileImage} alt="User Avatar" className="banner-pic" />
             <h4 className="aname">@{username}</h4>
             <p className="sname">{bio}</p>
           </div>
@@ -351,7 +471,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
       </div>
 
       <div className="save-part">
-        <button className="save_btn"> Save</button>
+       <button className="save_btn" onClick={handleSaveSettings}>Save</button>
       </div>
       {showAddModal && (
         <AddModal 

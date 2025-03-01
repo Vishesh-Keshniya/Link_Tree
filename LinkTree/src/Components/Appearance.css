@@ -130,6 +130,7 @@
   /* Outline Buttons */
 .button-outline {
     border: 1px solid black;
+    border-radius: none;
   }
   
  .button-outline-round {
@@ -137,6 +138,8 @@
     border-radius: 5px;
   }
   
+
+
 .button-outline-thick {
     border: 1px solid black;
     border-radius: 20px;
@@ -580,4 +583,76 @@
 .gg{
 
   background: #000;
+}
+
+.solid 
+{
+  border-radius: 0;
+}
+
+.solid-round{
+  border-radius: 5px;
+}
+
+.out{
+  border-radius: 0;
+  border: #000 2px solid;
+  background: none;
+}
+
+.outr{
+  border-radius: 20;
+  border: #000 2px solid;
+  background: none;
+}
+
+.outtt {
+  border: #000 2px solid;
+  border-radius: 50px;
+  background: none;
+}
+
+.round{
+  border-radius: 50px;
+}
+
+.hs1{
+  border: 2px solid black;
+    border-radius: 0;
+    box-shadow: 3px 3px 0px black;
+    background: none;
+}
+.hs3{
+
+ border: 2px solid black;
+    border-radius: 50px;
+    box-shadow: 3px 3px 0px black;
+    background: none;
+  }
+
+.hs2{
+  border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: 3px 3px 0px black;
+    background: none;
+}
+
+.bs1{
+ border-radius: 0;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.bs3{
+ border-radius: 50px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.sf{
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+
+.sfr{
+  border-top-right-radius: 50px;
+  border-bottom-left-radius: 50px;
 }

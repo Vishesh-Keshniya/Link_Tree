@@ -7,6 +7,8 @@ import Login from "./Components/Login";
 
 import Details from "./Components/Details"; // Add new component
 import Dashboard from './Components/Dashboard';
+import PhoneView from "./Components/Dashboard/PhoneView"
+import PublicProfileView from "./Components/Dashboard/PublicProfileView"
 
 function AppRoutes() { // ✅ Rename component
   return (
@@ -19,6 +21,10 @@ function AppRoutes() { // ✅ Rename component
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Details/>} />
           <Route path= "/dashboard" element={<Dashboard/>} />
+          <Route path="/phone-view/:userId" element={<PhoneView/>} />
+          <Route path="/public-profile/:userId" element={<PublicProfileView />} />
+          
+          
          
         </Routes>
       </div>

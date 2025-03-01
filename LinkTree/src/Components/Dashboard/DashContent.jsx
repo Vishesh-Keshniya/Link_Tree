@@ -8,20 +8,20 @@ const DashContent = ({ activeSection }) => {
   const [fullName, setFullName] = useState("");
   const [bio, setBio] = useState("");
   const [phoneHeaderColor, setPhoneHeaderColor] = useState("#000000");
-  const [layout, setLayout] = useState("stack");
-  const [shadowStyle, setShadowStyle] = useState("shadow-soft");
-  const [borderStyle, setBorderStyle] = useState("border-rounded");
-  const [buttonStyle, setButtonStyle] = useState("button-fill");
-  const [linkBgColor, setLinkBgColor] = useState("");
-  const [linkFontColor, setLinkFontColor] = useState("#000000");
-  const [font, setFont] = useState("DM Sans");
-  const [phoneFontColor, setPhoneFontColor] = useState("#D9D9D9");
+  const [layout, setLayout] = useState(localStorage.getItem("layout") || "stack");
+  const [shadowStyle, setShadowStyle] = useState(localStorage.getItem("shadowStyle") || "shadow-soft");
+  const [borderStyle, setBorderStyle] = useState(localStorage.getItem("borderStyle") || "border-rounded");
+  const [buttonStyle, setButtonStyle] = useState(localStorage.getItem("buttonStyle") || "button-fill");
+  const [linkBgColor, setLinkBgColor] = useState(localStorage.getItem("linkBgColor") || "#FFFFFF");
+  const [linkFontColor, setLinkFontColor] = useState(localStorage.getItem("linkFontColor") || "#000000");
+  const [font, setFont] = useState(localStorage.getItem("font") || "DM Sans");
+  const [phoneFontColor, setPhoneFontColor] = useState(localStorage.getItem("phoneFontColor") || "#D9D9D9");
+  const [selectedTheme, setSelectedTheme] = useState(localStorage.getItem("selectedTheme") || "air-snow");
+  const [selectedLiTheme, setSelectedLiTheme] = useState(localStorage.getItem("selectedLiTheme") || "airsnowli");
+  const [userId, setUserId] = useState(null); // Add userId state
+  const [loading, setLoading] = useState(true);
 
-  // Default theme settings
-  const [selectedTheme, setSelectedTheme] = useState("air-snow"); 
-  const [selectedLiTheme, setSelectedLiTheme] = useState("airsnowli");
-
-  // Fetch user data from backend
+  // Fetch user data and settings
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -37,14 +37,49 @@ const DashContent = ({ activeSection }) => {
         if (data.success) {
           setFullName(`${data.user.firstName} ${data.user.lastName}`);
           setBio(data.user.bio || "");
+          setUserId(data.user._id); // Set userId from the response
+
+          // Set appearance settings
+          if (data.user.settings) {
+            setLayout(data.user.settings.layout || "stack");
+            setShadowStyle(data.user.settings.shadowStyle || "shadow-soft");
+            setBorderStyle(data.user.settings.borderStyle || "border-rounded");
+            setButtonStyle(data.user.settings.buttonStyle || "button-fill");
+            setLinkBgColor(data.user.settings.linkBgColor || "#FFFFFF");
+            setLinkFontColor(data.user.settings.linkFontColor || "#000000");
+            setFont(data.user.settings.font || "DM Sans");
+            setPhoneFontColor(data.user.settings.phoneFontColor || "#D9D9D9");
+            setSelectedTheme(data.user.settings.selectedTheme || "air-snow");
+            setSelectedLiTheme(data.user.settings.selectedLiTheme || "airsnowli");
+          }
         }
       } catch (error) {
         console.error("Error fetching user:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchUser();
   }, []);
+
+  // Save state to local storage
+  useEffect(() => {
+    localStorage.setItem("layout", layout);
+    localStorage.setItem("shadowStyle", shadowStyle);
+    localStorage.setItem("borderStyle", borderStyle);
+    localStorage.setItem("buttonStyle", buttonStyle);
+    localStorage.setItem("linkBgColor", linkBgColor);
+    localStorage.setItem("linkFontColor", linkFontColor);
+    localStorage.setItem("font", font);
+    localStorage.setItem("phoneFontColor", phoneFontColor);
+    localStorage.setItem("selectedTheme", selectedTheme);
+    localStorage.setItem("selectedLiTheme", selectedLiTheme);
+  }, [layout, shadowStyle, borderStyle, buttonStyle, linkBgColor, linkFontColor, font, phoneFontColor, selectedTheme, selectedLiTheme]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="dashboard-container">
@@ -61,73 +96,72 @@ const DashContent = ({ activeSection }) => {
 
       {/* Dashboard Content */}
       <div className="dashboard-content">
-        {/* Links Section */}
         {activeSection === "Links" && (
           <>
             <div className="mobile-preview">
-              <PhoneView 
+              <PhoneView
                 bio={bio}
-                phoneHeaderColor={phoneHeaderColor} 
-                layout={layout} 
+                userId={userId} // Pass userId as a prop
+                phoneHeaderColor={phoneHeaderColor}
+                layout={layout}
                 shadowStyle={shadowStyle}
                 borderStyle={borderStyle}
                 buttonStyle={buttonStyle}
                 linkBgColor={linkBgColor}
                 linkFontColor={linkFontColor}
                 font={font}
-                phoneFontColor={phoneFontColor} 
+                phoneFontColor={phoneFontColor}
                 selectedTheme={selectedTheme}
-                selectedLiTheme={selectedLiTheme} // ✅ Pass `selectedLiTheme`
+                selectedLiTheme={selectedLiTheme}
               />
             </div>
             <div className="profile-section">
-              <Profile 
-                bio={bio} 
-                setBio={setBio} 
-                phoneHeaderColor={phoneHeaderColor} 
-                setPhoneHeaderColor={setPhoneHeaderColor} 
+              <Profile
+                bio={bio}
+                setBio={setBio}
+                phoneHeaderColor={phoneHeaderColor}
+                setPhoneHeaderColor={setPhoneHeaderColor}
               />
             </div>
           </>
         )}
 
-        {/* Appearance Section */}
         {activeSection === "Appearance" && (
           <>
             <div className="mobile-preview">
-              <PhoneView 
+              <PhoneView
                 bio={bio}
-                phoneHeaderColor={phoneHeaderColor} 
-                layout={layout} 
+                userId={userId} // Pass userId as a prop
+                phoneHeaderColor={phoneHeaderColor}
+                layout={layout}
                 shadowStyle={shadowStyle}
                 borderStyle={borderStyle}
                 buttonStyle={buttonStyle}
                 linkBgColor={linkBgColor}
                 linkFontColor={linkFontColor}
                 font={font}
-                phoneFontColor={phoneFontColor} 
+                phoneFontColor={phoneFontColor}
                 selectedTheme={selectedTheme}
-                selectedLiTheme={selectedLiTheme} // ✅ Pass `selectedLiTheme`
+                selectedLiTheme={selectedLiTheme}
               />
             </div>
             <div className="profile-section">
-              <Appearance 
-                setLayout={setLayout} 
+              <Appearance
+                setLayout={setLayout}
                 setShadowStyle={setShadowStyle}
                 setBorderStyle={setBorderStyle}
                 setButtonStyle={setButtonStyle}
                 setLinkBgColor={setLinkBgColor}
                 setLinkFontColor={setLinkFontColor}
                 setFont={setFont}
-                setPhoneFontColor={setPhoneFontColor} 
-                setSelectedTheme={setSelectedTheme} // ✅ Allow changing theme
-                setSelectedLiTheme={setSelectedLiTheme} // ✅ Allow changing `li` theme
+                setPhoneFontColor={setPhoneFontColor}
+                setSelectedTheme={setSelectedTheme}
+                setSelectedLiTheme={setSelectedLiTheme}
               />
             </div>
           </>
         )}
 
-        {/* Other Sections */}
         {activeSection === "Analytics" && <h2>Analytics Section (Coming Soon)</h2>}
         {activeSection === "Settings" && <h2>Settings Section (Coming Soon)</h2>}
       </div>

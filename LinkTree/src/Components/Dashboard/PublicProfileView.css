@@ -1,0 +1,88 @@
+.phone-header-pb{
+    display: flex;
+    flex-direction: column;
+}
+
+.phone-container-pb{
+    width: 300px;
+
+  height: 550px;
+  border-radius: 30px;
+  text-align: center;
+  border: 10px solid black;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  position: relative;
+  margin-left: 40%;
+  margin-right: 50%;
+  margin-top: 5%;
+  
+  /* Ensures the child elements are positioned properly */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Pushes .phone-connect to the bottom */
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    .phone-container-pb {
+      width: 90%; /* Make the container take up 90% of the screen width */
+      margin-left: auto; /* Center the container horizontally */
+      margin-right: auto;
+      margin-top: 10%; /* Adjust top margin for better spacing */
+      height: auto; /* Allow height to adjust based on content */
+      padding: 20px; /* Add padding for better spacing */
+      border: none;
+    }
+  
+    .phone-header-pb {
+      align-items: center; /* Center align items in the header */
+    }
+
+    .phone-connect {
+        padding: 15px 0;
+        position: relative; /* Ensures it doesn't move unexpectedly */
+        bottom: 0; /* Keeps it at the bottom */
+        text-align: center;
+        margin-bottom: -30px;
+      }
+  }
+  
+  /* For screens smaller than 480px (e.g., small mobile devices) */
+  @media (max-width: 480px) {
+    .phone-container-pb {
+      width: 100%; /* Make the container take up the full width */
+      border-radius: 20px; /* Reduce border radius for smaller screens */
+      border: 5px solid black; /* Reduce border thickness */
+      margin-top: 5%; /* Adjust top margin */
+      border: none;
+      box-shadow: none;
+    }
+  
+    .phone-header-pb {
+      flex-direction: column; /* Ensure header items stack vertically */
+      padding: 10px; /* Add padding for better spacing */
+    }
+    .phone-connect {
+        padding: 15px 0;
+        position: relative; /* Ensures it doesn't move unexpectedly */
+        bottom: 0; /* Keeps it at the bottom */
+        text-align: center;
+        margin-bottom: -30px;
+      }
+  }
+  
+  /* For screens larger than 1200px (e.g., desktops) */
+  @media (min-width: 1200px) {
+    .phone-container-pb {
+      width: 300px; /* Slightly increase width for larger screens */
+      margin-left: 40%; /* Adjust horizontal centering */
+      margin-right: 50%;
+    }
+    .phone-connect {
+        padding: 15px 0;
+        position: relative; /* Ensures it doesn't move unexpectedly */
+        bottom: 0; /* Keeps it at the bottom */
+        text-align: center;
+        margin-bottom: -30px;
+      }
+  }
