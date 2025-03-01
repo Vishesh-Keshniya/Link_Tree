@@ -86,13 +86,10 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
     const shareableLink = generateShareableLink();
     try {
       await navigator.clipboard.writeText(shareableLink);
-      alert("Link copied to clipboard!"); // You can replace this with a toast notification
-
-      // Navigate to PublicProfileView
-      navigate(`/public-profile/${userId}`);
+      alert("✅ Link copied to clipboard!"); // You can replace this with a toast notification
     } catch (error) {
-      console.error("Failed to copy link:", error);
-      alert("Failed to copy link. Please try again.");
+      console.error("❌ Failed to copy link:", error);
+      alert("❌ Failed to copy link. Please try again.");
     }
   };
 
