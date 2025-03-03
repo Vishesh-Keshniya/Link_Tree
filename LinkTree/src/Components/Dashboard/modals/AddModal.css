@@ -189,3 +189,97 @@ input:checked + .slider::before {
     padding: 5px;
     cursor: pointer;
   }
+
+
+  @media (max-width: 1024px) {
+    .modal-container {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .modal-container {
+      width: 100%;
+      max-width: 400px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .modal-container {
+      width: 80%;
+      padding: 15px;
+    }
+    
+    .tab-container {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+    }
+    
+    .tab-btn {
+      padding: 8px 12px;
+      font-size: 14px;
+    }
+    
+    .ip {
+      padding: 8px;
+    }
+    
+    .app-grid,
+    .app-grid-shop {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .modal-ic {
+      padding: 5px;
+    }
+  
+    .modal-ic p {
+      font-size: 12px;
+    }
+  
+    .toggle-container {
+      justify-content: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .modal-container {
+      width: 100%;
+     
+      transform: scale(0.9);
+
+    }
+  
+    .tab-btn {
+      font-size: 12px;
+      padding: 6px 10px;
+    }
+  
+    .modal-content h3 {
+      font-size: 16px;
+    }
+  
+    .modal-ic p {
+      font-size: 10px;
+    }
+  
+    .ip {
+      font-size: 14px;
+      padding: 6px;
+      width: 100%;
+    }
+  
+    .link-title {
+      flex-direction: row;
+      align-items: center;
+    }
+  
+    .toggle-container {
+      justify-content: center;
+      transform: scale(0.8);
+      
+    }
+  }

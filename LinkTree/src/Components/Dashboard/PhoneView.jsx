@@ -17,7 +17,7 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await fetch("http://localhost:3000/api/user", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/user", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -39,7 +39,7 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await fetch("http://localhost:3000/api/user-links", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/user-links", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -58,7 +58,7 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await fetch("http://localhost:3000/api/user-links-shop", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/user-links-shop", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -93,6 +93,72 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
     }
   };
 
+  const handleLinkClick = async (linkId, type) => {
+    console.log("Sending Click Data:", { linkId, type });
+  
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Unauthorized. Please log in.");
+        return;
+      }
+  
+      // ✅ Fix: Send `linkId` only when it's valid
+      const bodyData = linkId && linkId !== "button_click" ? { linkId, type } : { type };
+  
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/increment-clickss", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(bodyData),
+      });
+  
+      const data = await response.json();
+      console.log("Server Response:", data);
+  
+      if (!data.success) {
+        console.error("Error incrementing clicks:", data.message);
+        return;
+      }
+    } catch (error) {
+      console.error("Error tracking click:", error);
+    }
+  };
+  
+
+  const handleCtaClick = async () => {
+    console.log("CTA Click Tracked");
+  
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("Unauthorized. Please log in.");
+        return;
+      }
+  
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/increment-cta-click", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+  
+      const data = await response.json();
+      console.log("Server Response:", data);
+  
+      if (!data.success) {
+        console.error("Error incrementing CTA clicks:", data.message);
+      }
+    } catch (error) {
+      console.error("Error tracking CTA click:", error);
+    }
+  };
+  
+
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -119,13 +185,19 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
       <div className="phone-buttons">
         <button
           className={`btn-link ${!showShopLinks ? "active" : ""}`}
-          onClick={() => setShowShopLinks(false)}
+          onClick={() => {
+            setShowShopLinks(false);
+            handleLinkClick("button_click", "link")
+          }}
         >
           Links
         </button>
         <button
           className={`btn-shop ${showShopLinks ? "active" : ""}`}
-          onClick={() => setShowShopLinks(true)}
+          onClick={() => {
+            setShowShopLinks(true);
+            handleLinkClick("button_click", "shop")
+          }}
         >
           Shop
         </button>
@@ -145,6 +217,7 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ backgroundColor: linkBgColor, color: linkFontColor }}
+                onClick={() => handleLinkClick(link._id, showShopLinks ? "shop" : "link")}
               >
                 <div className="linksss">
                   <div className="licon">
@@ -176,7 +249,7 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
 
       {/* Connect Button */}
       <div className="phone-connect">
-        <button className="connect-btn">Get Connected</button>
+        <button className="connect-btn" onClick={handleCtaClick}><a href="https://link-tree-eta-beryl.vercel.app/">Get Connected</a></button>
         <p className="spark-logo">
           <img src="sparklogo.png" alt="Spark" style={{ fontFamily: font, color: phoneFontColor }} /> SPARK
         </p>

@@ -12,6 +12,23 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+  const handleLoginSuccess = async () => {
+    try {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/track-login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username }),
+      });
+  
+      const result = await response.json();
+      console.log(result.message);
+    } catch (error) {
+      console.error("Error tracking login:", error);
+    }
+  };
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,7 +36,7 @@ const Login = () => {
     const loginData = { username, password };
 
     try {
-      const response = await fetch("http://localhost:3000/api/login", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginData),
@@ -30,6 +47,8 @@ const Login = () => {
         alert("Login Successful!");
         localStorage.setItem("token", result.token); // Store JWT token
         localStorage.setItem("username", result.username); // Store username
+ await handleLoginSuccess();
+        
         navigate("/dashboard"); // Redirect to dashboard
       } else {
         setError(result.message);

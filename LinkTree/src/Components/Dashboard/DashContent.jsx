@@ -3,6 +3,8 @@ import "./DashContent.css";
 import PhoneView from "./PhoneView";
 import Profile from "./Profile";
 import Appearance from "../Appearance";
+import Analytics from "../Analytics";
+import SettingComp from "../SettingComp";
 
 const DashContent = ({ activeSection }) => {
   const [fullName, setFullName] = useState("");
@@ -20,6 +22,8 @@ const DashContent = ({ activeSection }) => {
   const [selectedLiTheme, setSelectedLiTheme] = useState(localStorage.getItem("selectedLiTheme") || "airsnowli");
   const [userId, setUserId] = useState(null); // Add userId state
   const [loading, setLoading] = useState(true);
+    const [showLogout, setShowLogout] = useState(false); // ✅ Toggle state for logout button
+  
 
   // Fetch user data and settings
   useEffect(() => {
@@ -28,7 +32,7 @@ const DashContent = ({ activeSection }) => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const response = await fetch("http://localhost:3000/api/user-details", {
+        const response = await fetch("https://linktree-backend-0abv.onrender.com/api/user-details", {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -77,6 +81,10 @@ const DashContent = ({ activeSection }) => {
     localStorage.setItem("selectedLiTheme", selectedLiTheme);
   }, [layout, shadowStyle, borderStyle, buttonStyle, linkBgColor, linkFontColor, font, phoneFontColor, selectedTheme, selectedLiTheme]);
 
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Remove token
+    navigate("/login"); // Redirect to login page
+  };
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -90,9 +98,26 @@ const DashContent = ({ activeSection }) => {
           <p className="pp">Congratulations, You got a great response today.</p>
         </h2>
         <button className="share-btn">
-          <img src="share.png" alt="Share Icon" /> Share
+          <img src="share.png" alt="Share Icon" /> <a href="https://link-tree-eta-beryl.vercel.app/">Share </a>
         </button>
       </div>
+      
+      <nav className="phone-nav">
+        <div className="navlogo">
+          <img src="navlog.png"></img>
+        </div>
+        <div className="navav">
+          <button onClick={() => setShowLogout(!showLogout)}><img src="ava.png"></img></button>
+
+        
+        </div>
+        {showLogout && (
+          <button className="logout-btn-ph" onClick={handleLogout}>
+          <img src="out.png"></img> Sign out
+          </button>
+        )}
+        
+      </nav>
 
       {/* Dashboard Content */}
       <div className="dashboard-content">
@@ -162,9 +187,14 @@ const DashContent = ({ activeSection }) => {
           </>
         )}
 
-        {activeSection === "Analytics" && <h2>Analytics Section (Coming Soon)</h2>}
-        {activeSection === "Settings" && <h2>Settings Section (Coming Soon)</h2>}
+       
       </div>
+      {activeSection === "Analytics" && <Analytics/>}
+
+        
+{activeSection === "Settings" && <SettingComp/>}
+
+
     </div>
   );
 };

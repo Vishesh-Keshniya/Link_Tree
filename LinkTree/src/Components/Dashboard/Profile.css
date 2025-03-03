@@ -36,6 +36,7 @@
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
+  width: 100%;
 }
 
 .custom-file-input::-webkit-file-upload-button {
@@ -344,6 +345,7 @@
       padding: 15px;
       border-radius: 10px;
       margin: 10px 0;
+      width: 100%;
     }
     
     .link-content {
@@ -494,5 +496,69 @@
 
 
 
+    @media (max-width: 768px) {
+      .profile-container {
+        transform: scale(0.9); /* Scales down everything */
+        transform-origin: top center; /* Ensures scaling happens from the top */
+        width: 100%;
+        padding: 0;
+        overflow: hidden;
+        margin-top: 50px;
+      }
     
+      .profile-card, 
+      .add-section, 
+      .banner-card, 
+      .biopart, 
+      .profile-details, 
+      .bioarea, 
+      .pt, 
+      .ptt, 
+      .save-part, 
+      .save-btn {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    
+      .banner {
+        height: 150px;
+        padding: 10px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+    
+      .color-options {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    
+      .color-circle {
+        width: 40px;
+        height: 40px;
+      }
+    
+      .link-card, 
+      .link-content, 
+      .link-actions {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    
+      .link-url, .link-stats, .link-header {
+        width: 100%;
+      }
+    
+      .shop-now-btn {
+        width: 100%;
+      }
+    
+      .save-part {
+        margin-left: 0;
+        text-align: center;
+      }
+    
+      .save-btn, .add-btn {
+        width: 100%;
+      }
+    }
     

@@ -5,18 +5,16 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
   const [linkTitle, setLinkTitle] = useState("");
   const [linkUrl, setLinkUrl] = useState("");
   const [isEnabled, setIsEnabled] = useState(false);
-  const [currentTab, setCurrentTab] = useState(activeTab); // Track the active tab
-  const [selectedApp, setSelectedApp] = useState(""); // Track the selected application
-  const [error, setError] = useState(""); // Track error messages
+  const [currentTab, setCurrentTab] = useState(activeTab); 
+  const [selectedApp, setSelectedApp] = useState(""); 
+  const [error, setError] = useState(""); 
 
-  // Function to close modal if clicking outside
   const handleOverlayClick = (e) => {
     if (e.target.classList.contains("modal-overlay")) {
       closeModal();
     }
   };
 
-  // Function to handle form submission
   const handleSubmit = async () => {
     if (!selectedApp) {
       setError("Please select an application.");
@@ -42,9 +40,9 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
     const entry = {
       title: linkTitle,
       url: linkUrl,
-      type: currentTab, // 'link' or 'shop'
+      type: currentTab, 
       tag: selectedApp,
-      icon: iconMap[selectedApp] || "default.png", // Store icon based on selection
+      icon: iconMap[selectedApp] || "default.png",
     };
   
     try {
@@ -54,7 +52,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
         return;
       }
   
-      const response = await fetch("http://localhost:3000/api/add-entry", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/add-entry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -66,7 +64,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
       const data = await response.json();
   
       if (data.success) {
-        addNewEntry(entry); // Add the new entry to the parent state
+        addNewEntry(entry); 
         alert("Entry added successfully!");
         closeModal(); // Close the modal
         window.location.reload(); // Refresh the page

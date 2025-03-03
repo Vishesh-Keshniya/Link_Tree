@@ -57,7 +57,7 @@ const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry 
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`http://localhost:3000/api/edit-entry/${entry._id}`, {
+      const response = await fetch(`https://linktree-backend-0abv.onrender.com/api/edit-entry/${entry._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -94,7 +94,7 @@ const EditModalShop = ({ closeModal, activeTab, addNewEntry, entry, updateEntry 
 
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch("http://localhost:3000/api/add-entry", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/add-entry", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

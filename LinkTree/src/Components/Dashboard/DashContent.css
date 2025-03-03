@@ -42,4 +42,64 @@
   height: 100%;
  }
   
+  .share-btn a{
+    text-decoration: none;
+    color: black;
+  }
+
+  .phone-nav {
+    display: none; /* Hidden on desktop */
+    
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      display: none; /* Hide header in mobile */
+    }
+  
+    .phone-nav {
+      display: flex;
+      width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    z-index: 1000; /* Ensures it stays on top */
+    }
+
+    .phone-nav .navav img {
+      width: 50px;
+    }
+
+    .mobile-preview{
+      display: none;
+    }
+
+    .dashboard-container{
+
+      width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
+    .navav button{
+      border: none;
+    }
+
+    .logout-btn-ph{
+      border-radius: 20px;
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+      border: none;
+
+    }
+  }
   

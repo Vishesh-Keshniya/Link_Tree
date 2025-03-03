@@ -6,7 +6,7 @@ import EditModalShop from "./modals/EditModalShop";
 
 
 const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
-  const [color, setColor] = useState("#000000");
+  const [color, setColor] = useState("#F8F8F8");
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [showEditModalShop, setShowEditModalShop] = useState(false);
@@ -43,7 +43,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/api/user", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/user", {
         method: "GET",
         headers: { "Authorization": `Bearer ${token}` },
       });
@@ -134,7 +134,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
       const token = localStorage.getItem("token");
       console.log("Deleting entry:", id, "Type:", type);
   
-      const response = await fetch(`http://localhost:3000/api/entries/${id}?type=${type}`, {
+      const response = await fetch(`https://linktree-backend-0abv.onrender.com/api/entries/${id}?type=${type}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -167,7 +167,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
       }
   
       // Send request to API to increment clicks
-      const response = await fetch("http://localhost:3000/api/increment-clicks", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/increment-clicks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -211,7 +211,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
       const formData = new FormData();
       formData.append("image", file);
   
-      const uploadRes = await fetch("http://localhost:3000/api/upload-profile-image", {
+      const uploadRes = await fetch("https://linktree-backend-0abv.onrender.com/api/upload-profile-image", {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
         body: formData,
@@ -243,7 +243,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
         return;
       }
   
-      const response = await fetch("http://localhost:3000/api/remove-profile-image", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/remove-profile-image", {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -281,7 +281,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/api/update-settings", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/update-settings", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -147,37 +147,34 @@
   
   /* Hard Shadow Buttons */
   .button-hard-shadow {
-    border: 2px solid black;
-    box-shadow: 3px 3px 0px black;
+  
   }
   
   .button-hard-shadow-round {
-    border: 2px solid black;
-    border-radius: 5px;
-    box-shadow: 3px 3px 0px black;
+   
   }
   
    .button-hard-shadow-thick {
-    border: 3px solid black;
-    border-radius: 20px;
-    box-shadow: 3px 3px 0px black;
+ 
   }
   
   /* Soft Shadow Buttons */
   .button-soft-shadow {
   
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   }
   
   .button-soft-shadow-round {
     
-    border-radius: 5px;
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+   
   }
   
   .button-soft-shadow-dotted {
-    border-radius: 20px;
-    box-shadow: 0px 5px 0px rgba(0, 0, 0, 0.2);
+    
+  }
+
+  .bs2{
+    border-radius: 20;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
   }
   
  /* Special Buttons */
@@ -251,10 +248,14 @@
   }
   
   .button-special-solid-rounded {
-    background: black;
-    border-radius: 20px;
+ 
   }
   .button-special-thin-outline {
+   
+  }
+
+
+  .srg{
     background: transparent;
     height: 40px;
   
@@ -269,8 +270,8 @@
   }
   
   /* Add four small squares */
-  .button-special-thin-outline::before,
-  .button-special-thin-outline::after {
+  .srg::before,
+  .srg::after {
     content: "";
     position: absolute;
     width: 8px;  /* Size of the squares */
@@ -280,14 +281,14 @@
   }
   
   /* Top-left & Bottom-left */
-  .button-special-thin-outline::before {
+  .srg::before {
     top: -5px;
     left: -5px;
     box-shadow: 0px 40px 0px black;
   }
   
   /* Top-right & Bottom-right */
-  .button-special-thin-outline::after {
+  .srg::after {
     top: -5px;
     right: -5px;
     box-shadow: 0px 40px 0px black;
@@ -655,4 +656,90 @@
 .sfr{
   border-top-right-radius: 50px;
   border-bottom-left-radius: 50px;
+}
+
+.appsave{
+
+  margin: 20px;
+  width: 20%;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: none;
+  background: #29A263;
+  color: white;
+  border-radius: 10px;
+}
+
+.savedi{
+  display: flex;
+  justify-content: end;
+}
+
+@media (max-width: 768px) {
+ 
+  .theme-label{
+    font-size: 12px;
+  }
+  .al-container{
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  .lay-btn {
+    width: 50px;
+    height: 50px;
+  }
+
+  .lay-btn img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .theme-box {
+    width: 80px;
+    height: 130px;
+  }
+
+ .theme-container img{
+  width: 100%;
+ }
+
+  .button-row img{
+    width: 100%;
+  }
+
+  .textss{
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .layout-app {
+    padding: 10px;
+  }
+
+  .lay-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .lay-btn img {
+    width: 20px;
+    height: 20px;
+  }
+
+  
+  .button-row img{
+    width: 100%;
+  }
+
+  .theme-box {
+    width: 70px;
+    height: 110px;
+  }
+  .appsave{
+    width: 50%;
+    
+  }
 }

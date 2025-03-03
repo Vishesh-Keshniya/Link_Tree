@@ -1,0 +1,264 @@
+/* Analytics.css */
+.analytics-container {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  
+    border-radius: 10px;
+    width: 100%;
+  }
+  
+  .analytics-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .date-picker {
+    background: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .analytics-summary {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .summary-card {
+    flex: 1;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: start;
+  }
+  
+  .green {
+    background:#22D679;
+    color: white;
+  }
+  
+
+  .green h1 {
+    color: white;
+  }
+
+  .green p {
+    color: white;
+  }
+  .light-green {
+    background: #DCFFEB;
+    color: #000;
+  }
+
+    .light-green h3{
+        color: #000;
+    }
+  
+  .analytics-chart, .traffic-by-device, .site-traffic {
+    background: white;
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+
+  .analytics-chart {
+    margin-top: 30px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+
+ .midx{
+  display: flex;
+  gap: 20PX;
+  
+ }
+
+ .device{
+  width: 50%;
+  background: white;
+  border-radius: 20PX;
+ }
+
+ .device h3{
+  color: #000;
+  padding-left: 20px;
+  padding-top: 10px;
+ }
+
+ .pie{
+  width: 50%;
+  background: white;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  text-align: left;
+ }
+
+ .pie h3{
+  color: #000;
+ 
+ }
+
+
+ .bottom
+ {
+  width: 50%;
+  background: white;
+  border-radius: 20px;
+  margin-top: 20px;
+ }
+ 
+ .bottom h3{
+  color: #000;
+  padding-left: 20px;
+  padding-top: 10px;
+  text-align: start;
+ }
+
+ .analytics-chart h3{
+  color: #000;
+  text-align: start;
+  padding-bottom: 20px;
+  
+ }
+ 
+
+ 
+
+ @media (max-width: 1024px) {
+  .analytics-header {
+      flex-direction: column;
+      align-items: flex-start;
+  }
+  .midx {
+      flex-direction: column;
+  }
+  .device, .pie {
+      width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+ 
+  .summary-card {
+      width: 100%;
+      text-align: center;
+  }
+
+  .analytics-chart1
+  {
+    width: 100%;
+    transform: scale(0.8);
+    
+  }
+}
+
+@media (max-width: 480px) {
+  .analytics-container {
+      padding-top: 80px;
+      padding-bottom: 60px;
+      width: 100%;
+  }
+  .analytics-header{
+    width: 100%;
+  }
+  .analytics-header {
+      flex-direction: column;
+      align-items: left;
+    
+  }
+  .analytics-chart
+  {
+    width: 100%;
+    transform: scale(0.9);
+    padding: 0;
+
+  }
+  .analytics-chart2
+  {
+    width: 100%;
+    transform: scale(0.9);
+    padding: 0;
+    margin: 0;
+    
+
+  }
+  .analytics-chart h3 {
+    padding-top: 10px;
+    padding-left: 10px;
+  }
+  .analytics-chart3
+  {
+    width: 100%;
+    transform: scale(0.9);
+    
+    margin: 0;
+    
+
+  }
+
+  .analytics-chart4
+  {
+    width: 100%;
+    transform: scale(0.7);
+    margin-left: -40px;
+    padding: 0;
+    
+
+  }
+
+  .pp h3{
+    padding-left: 40px;
+    
+  }
+  
+  .date-picker {
+      width: 100%;
+      justify-content: center;
+  }
+  .midx, .bottom {
+     
+      margin-bottom: 8px;
+      transform: scale(0.9);
+      width: 100%;
+  }
+
+
+  .analytics-chart, .traffic-by-device, .site-traffic {
+    background: white;
+    
+    border-radius: 10px;
+    text-align: center;
+    
+  }
+  .analytics-summary {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto; /* Enables horizontal scrolling */
+    gap: 10px;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+    scrollbar-width: none; /* Hides scrollbar in Firefox */
+    -ms-overflow-style: none; /* Hides scrollbar in IE/Edge */
+  }
+
+  .analytics-summary::-webkit-scrollbar {
+    display: none; /* Hides scrollbar in Chrome/Safari */
+  }
+
+  .summary-card {
+    min-width: 80%;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+}

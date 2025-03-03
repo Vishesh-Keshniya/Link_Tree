@@ -47,7 +47,7 @@ function Appearance({
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/get-appearance", {
+        const response = await fetch("https://linktree-backend-0abv.onrender.com/api/get-appearance", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -153,7 +153,7 @@ const handleButtonStyleChange = (style) => {
     console.log("Sending settings:", settings); // Log the settings object
   
     try {
-      const response = await fetch("http://localhost:3000/api/save-appearance", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/save-appearance", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -176,7 +176,7 @@ const handleButtonStyleChange = (style) => {
     }
   };
   return (
-    <div>
+    <div className="al-container">
       {/* Layout Section */}
       <div className="layout-app">
         <h1>Layout</h1>
@@ -260,9 +260,16 @@ const handleButtonStyleChange = (style) => {
           {/* Soft Shadow Buttons */}
           <div className="textss">Soft Shadow</div>
           <div className="button-row">
-            <button className="button-soft-shadow" onClick={() => handleButtonStyleChange("bs1")}></button>
-            <button className="button-soft-shadow-round" onClick={() => handleButtonStyleChange("button-soft-shadow-round")}></button>
-            <button className="button-soft-shadow-dotted" onClick={() => handleButtonStyleChange("bs3")}></button>
+            <button className="button-soft-shadow" onClick={() => handleButtonStyleChange("bs1")}>
+            <img src="41.png" alt="Double Outline" />
+            </button>
+            
+            <button className="button-soft-shadow-round" onClick={() => handleButtonStyleChange("bs2")}>
+            <img src="42.png" alt="Double Outline" />
+            </button>
+            <button className="button-soft-shadow-dotted" onClick={() => handleButtonStyleChange("bs3")}>
+            <img src="43.png" alt="Double Outline" />
+            </button>
           </div>
 
           {/* Special Buttons */}
@@ -279,8 +286,10 @@ const handleButtonStyleChange = (style) => {
             </button>
           </div>
           <div className="button-row">
-            <button className="button-special-solid-rounded" onClick={() => handleButtonStyleChange("sfr")}></button>
-            <button className="button-special-thin-outline" onClick={() => handleButtonStyleChange("button-special-thin-outline")}>
+            <button className="button-special-solid-rounded" onClick={() => handleButtonStyleChange("sfr")}>
+            <img src="61.png" alt="Filled" />
+            </button>
+            <button className="button-special-thin-outline" onClick={() => handleButtonStyleChange("srg")}>
               <img src="62.png" alt="Thin Outline" />
             </button>
             <button className="button-special-filled" onClick={() => handleButtonStyleChange("sf")}>
@@ -433,7 +442,7 @@ const handleButtonStyleChange = (style) => {
         </div>
 
         {/* Save Button */}
-        <button onClick={saveAppearanceSettings}>Save</button>
+       <div className="savedi"> <button className="appsave" onClick={saveAppearanceSettings}>Save</button></div>
       </div>
     </div>
   );

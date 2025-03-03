@@ -25,20 +25,20 @@ const PublicPhoneView = () => {
 
   // Icon mapping
   const iconMapping = {
-    "youtube.png": "http://localhost:3000/uploads/ytr.png",
-    "fb.png": "http://localhost:3000/uploads/fb.png",
-    "x.png": "http://localhost:3000/uploads/x.png",
-    "instr.png": "http://localhost:3000/uploads/instr.png",
-    "swiggi.png": "http://localhost:3000/uploads/swiggi.png",
-    "flipkart.png": "http://localhost:3000/uploads/flipkart.png",
-    "zomato.png": "http://localhost:3000/uploads/zomato.png",
-    "shop.png": "http://localhost:3000/uploads/shop.png",
+    "youtube.png": "https://linktree-backend-0abv.onrender.com/uploads/youtube.png",
+    "fb.png": "https://linktree-backend-0abv.onrender.com/uploads/fb.png",
+    "x.png": "https://linktree-backend-0abv.onrender.com/uploads/x.png",
+    "instr.png": "https://linktree-backend-0abv.onrender.com/uploads/instagram.png",
+    "swiggi.png": "https://linktree-backend-0abv.onrender.com/uploads/swiggi.png",
+    "flipkart.png": "https://linktree-backend-0abv.onrender.com/uploads/flipkart.png",
+    "zomato.png": "https://linktree-backend-0abv.onrender.com/uploads/zomato.png",
+    "shop.png": "https://linktree-backend-0abv.onrender.com/uploads/shop.png",
   };
 
   // Fetch user data
   const fetchUserData = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/api/public/user-data/${userId}`);
+      const response = await fetch(`https://linktree-backend-0abv.onrender.com/api/public/user-data/${userId}`);
       if (!response.ok) throw new Error("Failed to fetch user data.");
 
       const data = await response.json();
@@ -46,17 +46,17 @@ const PublicPhoneView = () => {
 
       if (data.success) {
         setUserName(data.user.username || "User");
-        setProfileImage(data.user.image || "http://localhost:3000/uploads/ava.png");
+        setProfileImage(data.user.image || "https://linktree-backend-0abv.onrender.com/uploads/ava.png");
         setBio(data.user.bio || "");
 
         // Map icon filenames to their corresponding URLs
         const processedLinks = data.links.map(link => ({
           ...link,
-          icon: iconMapping[link.icon] || "http://localhost:3000/uploads/default-icon.png",
+          icon: iconMapping[link.icon] || "https://linktree-backend-0abv.onrender.com/uploads/default-icon.png",
         }));
         const processedShopLinks = data.shopLinks.map(link => ({
           ...link,
-          icon: iconMapping[link.icon] || "http://localhost:3000/uploads/default-icon.png",
+          icon: iconMapping[link.icon] || "https://linktree-backend-0abv.onrender.com/uploads/default-icon.png",
         }));
 
         setLinks(processedLinks);
@@ -150,7 +150,7 @@ const PublicPhoneView = () => {
                       src={link.icon} // Use the dynamically set icon URL
                       alt={link.title || "Website"}
                       onError={(e) => {
-                        e.target.src = "http://localhost:3000/uploads/default-icon.png"; // Fallback if the icon fails to load
+                        e.target.src = "https://linktree-backend-0abv.onrender.com/uploads/default-icon.png"; // Fallback if the icon fails to load
                       }}
                     />
                   </div>
@@ -182,7 +182,7 @@ const PublicPhoneView = () => {
       <div className="phone-connect">
         <button className="connect-btn">Get Connected</button>
         <p className="spark-logo">
-          <img src="http://localhost:3000/uploads/sparklogo.png" alt="Spark" style={{ fontFamily: font, color: phoneFontColor }} /> SPARK
+          <img src="https://linktree-backend-0abv.onrender.com/uploads/sparklogo.png" alt="Spark" style={{ fontFamily: font, color: phoneFontColor }} /> SPARK
         </p>
       </div>
     </div>
