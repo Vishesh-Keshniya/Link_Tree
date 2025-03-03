@@ -43,7 +43,7 @@ const Details = () => {
     const requestData = { userId, username, category: selectedCategory };
 
     try {
-      const response = await fetch("http://localhost:3000/api/update-details", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/update-details", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(requestData),
