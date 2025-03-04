@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";  // ✅ Import ToastContainer & toast
-import "react-toastify/dist/ReactToastify.css";  // ✅ Import Toast styles
+import { toast, ToastContainer } from "react-toastify";  
+import "react-toastify/dist/ReactToastify.css"; 
 import "./Signup.css";
 
 const Signup = () => {
   const navigate = useNavigate();
 
-  // State Variables
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -15,7 +14,6 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  // Validation function
   const validateInputs = () => {
     let newErrors = {};
 
@@ -42,10 +40,9 @@ const Signup = () => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true if no errors
+    return Object.keys(newErrors).length === 0; 
   };
 
-  // Handle Form Submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -69,7 +66,7 @@ const Signup = () => {
 
         setTimeout(() => {
           navigate("/register");
-        }, 2000); // ✅ Redirect after 2 seconds
+        }, 2000); 
       } else {
         toast.error(`❌ ${result.message}`);
       }
@@ -81,7 +78,7 @@ const Signup = () => {
 
   return (
     <div className="signup-container">
-      <ToastContainer position="top-center" autoClose={3000} />  {/* ✅ Add ToastContainer Here */}
+      <ToastContainer position="top-center" autoClose={3000} />  
 
       <div className="signup-left">
         <div className="slo">
@@ -132,7 +129,6 @@ const Signup = () => {
         </div>
       </div>
 
-      {/* Right Section - Image */}
       <div className="signup-right">
         <div className="image-overlay"></div>
         <img src="wallpaper.png" alt="Signup Art" />

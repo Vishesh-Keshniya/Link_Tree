@@ -22,7 +22,7 @@ function Appearance({
 
   const [linkBgColor, setLocalLinkBgColor] = useState("");
   const [linkFontColor, setLocalLinkFontColor] = useState("");
-  const [phoneFontColor, setLocalPhoneFontColor] = useState("");
+  const [phoneFontColor, setLocalPhoneFontColor] = useState("#FFFFFF");
 
   const [selectedFont, setSelectedFont] = useState("");
   const [showDropdown, setShowDropdown] = useState("");

@@ -17,7 +17,7 @@ const DashContent = ({ activeSection }) => {
   const [linkBgColor, setLinkBgColor] = useState(localStorage.getItem("linkBgColor") || "#FFFFFF");
   const [linkFontColor, setLinkFontColor] = useState(localStorage.getItem("linkFontColor") || "#000000");
   const [font, setFont] = useState(localStorage.getItem("font") || "DM Sans");
-  const [phoneFontColor, setPhoneFontColor] = useState(localStorage.getItem("phoneFontColor") || "#D9D9D9");
+  const [phoneFontColor, setPhoneFontColor] = useState(localStorage.getItem("phoneFontColor") || "#FFFFFF");
   const [selectedTheme, setSelectedTheme] = useState(localStorage.getItem("selectedTheme") || "air-snow");
   const [selectedLiTheme, setSelectedLiTheme] = useState(localStorage.getItem("selectedLiTheme") || "airsnowli");
   const [userId, setUserId] = useState(null); 
@@ -49,7 +49,7 @@ const DashContent = ({ activeSection }) => {
             setLinkBgColor(data.user.settings.linkBgColor || "#FFFFFF");
             setLinkFontColor(data.user.settings.linkFontColor || "#FFFFFF");
             setFont(data.user.settings.font || "DM Sans");
-            setPhoneFontColor(data.user.settings.phoneFontColor || "#D9D9D9");
+            setPhoneFontColor(data.user.settings.phoneFontColor || "#FFFFFF");
             setSelectedTheme(data.user.settings.selectedTheme || "air-snow");
             setSelectedLiTheme(data.user.settings.selectedLiTheme || "airsnowli");
           }

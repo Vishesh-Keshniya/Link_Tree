@@ -407,26 +407,28 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
                   </button>
                 </div> 
                 <div className="link-url">
-                  <a 
-                    href={link.url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    onClick={() => handleLinkClick(link._id, link.type)}
-                  >
-                    {link.url}
-                  </a>
-                  <button 
-                    onClick={() => {
-                      if (link.saveMode) {
-                        alert("Please turn off the save mode for this link to edit.");
-                      } else {
-                        handleEditClick(link);
-                      }
-                    }}
-                  >
-                    <img src="edit.png" alt="Edit" />
-                  </button>
-                </div>
+  <a 
+    href={link.url} 
+    target="_blank" 
+    rel="noopener noreferrer"
+    onClick={() => handleLinkClick(link._id, link.type)}
+    title={link.url} // Show full URL on hover
+  >
+    {link.url.length > 25 ? link.url.slice(0, 20) + "..." : link.url}
+  </a>
+  <button 
+    onClick={() => {
+      if (link.saveMode) {
+        toast.warning("Please turn off the save mode for this link to edit.");
+      } else {
+        handleEditClick(link);
+      }
+    }}
+  >
+    <img src="edit.png" alt="Edit" />
+  </button>
+</div>
+
                 <div className="link-stats">
                   <img src="clicks.png" alt="Clicks" /> {link.clicks || 0} clicks
                 </div>

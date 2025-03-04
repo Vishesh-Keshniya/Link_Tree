@@ -170,6 +170,8 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
 
   return (
     <div className={`phone-container ${selectedTheme}`} style={{ fontFamily: font, color: phoneFontColor }}>
+      <ToastContainer position="top-center" autoClose={3000} />
+
       {}
       <div className={`phone-profile ${selectedTheme}`} style={{ backgroundColor: phoneHeaderColor }}>
         <div className="phone-header">

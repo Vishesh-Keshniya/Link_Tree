@@ -25,7 +25,7 @@ const PublicPhoneView = () => {
 
   // Icon mapping
   const iconMapping = {
-    "youtube.png": "https://linktree-backend-0abv.onrender.com/uploads/yt.png",
+    "youtube.png": "https://linktree-backend-0abv.onrender.com/uploads/ytr.png",
     "fb.png": "https://linktree-backend-0abv.onrender.com/uploads/fb.png",
     "x.png": "https://linktree-backend-0abv.onrender.com/uploads/x.png",
     "instr.png": "https://linktree-backend-0abv.onrender.com/uploads/instagram.png",
@@ -193,7 +193,7 @@ const PublicPhoneView = () => {
 
       {/* Connect Button */}
       <div className="phone-connect">
-        <button className="connect-btn">Get Connected</button>
+        <a href="https://link-tree-eta-beryl.vercel.app/" className="connect-btn">Get Connected</a>
         <p className="spark-logo">
           <img src="https://linktree-backend-0abv.onrender.com/uploads/sparklogo.png" alt="Spark" style={{ fontFamily: font, color: phoneFontColor }} /> SPARK
         </p>
