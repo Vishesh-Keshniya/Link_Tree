@@ -1,18 +1,10 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import react from "@vitejs/plugin-react-swc";
 
 export default defineConfig({
   plugins: [react()],
-  server: {
-    open: true, // Automatically opens browser on `npm run dev`
-  },
+  base: "./", // Change this from "/" to "./" for relative paths
   build: {
-    outDir: "dist",
-  },
-  resolve: {
-    alias: {
-      "@": "/src",
-    },
-  },
-  base: "/", // Ensure base is set correctly
+    outDir: "dist"
+  }
 });
