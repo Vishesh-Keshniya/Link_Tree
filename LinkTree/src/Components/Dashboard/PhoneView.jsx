@@ -80,7 +80,7 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
   }, []);
 
   const generateShareableLink = () => {
-    return `https://link-tree-eta-beryl.vercel.app/public-profile/${userId}`; // Link to PublicProfileView
+    return `${window.location.origin}/public-profile/${userId}`; // Link to PublicProfileView
   };
 
   // Handle Share Button Click
