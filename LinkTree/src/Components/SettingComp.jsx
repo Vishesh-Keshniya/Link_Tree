@@ -19,7 +19,7 @@ const SettingComp = () => {
         const token = localStorage.getItem("token");
         if (!token) return;
 
-        const response = await fetch("http://localhost:3000/api/user-details", {
+        const response = await fetch("https://linktree-backend-0abv.onrender.com/api/user-details", {
           headers: { Authorization: `Bearer ${token}` },
         });
 
@@ -48,7 +48,7 @@ const SettingComp = () => {
       const token = localStorage.getItem("token");
       if (!token) return;
 
-      const response = await fetch("http://localhost:3000/api/update-user", {
+      const response = await fetch("https://linktree-backend-0abv.onrender.com/api/update-user", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
