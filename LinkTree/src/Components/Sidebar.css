@@ -22,6 +22,26 @@
  }
 
   
+
+ .menu-btn:hover {
+  background: #f0f0f0;
+  transform: scale(1.05);
+}
+
+.menu-btn.active {
+  background:#F5F5F5; /* Blue background for active button */
+  color:  #444;
+  font-weight: bold;
+  border-radius: 8px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+
+}
+
+.menu-btn.active img {
+  filter: invert(50%) sepia(80%) saturate(300%) hue-rotate(90deg);
+}
+
   
   .logo-icond {
     width: 30px;

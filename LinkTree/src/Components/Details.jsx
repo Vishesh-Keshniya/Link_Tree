@@ -1,42 +1,65 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";  // ✅ Import ToastContainer & toast
+import "react-toastify/dist/ReactToastify.css";  // ✅ Import Toast styles
 import "./Details.css";
 
 const Details = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
 
-  const categories = [
-    "Business",
-    "Creative",
-    "Education",
-    "Entertainment",
-    "Fashion & Beauty",
-    "Food & Beverage",
-    "Government & Politics",
-    "Health & Wellness",
-    "Non-Profit",
-    "Other",
-    "Tech",
-    "Travel & Tourism"
-  ];
+  // ✅ Category to Image Mapping
+  const categoryImages = {
+    "Business": "b.png",
+    "Creative": "c.png",
+    "Education": "e.png",
+    "Entertainment": "en.png",
+    "Fashion & Beauty": "f.png",
+    "Food & Beverage": "fo.png",
+    "Government & Politics": "G.png",
+    "Health & Wellness": "h.png",
+    "Non-Profit": "n.png",
+    "Other": "n.png",
+    "Tech": "t.png",
+    "Travel & Tourism": "tr.png"
+  };
 
-  // ✅ Check if userId exists in localStorage
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     if (!userId) {
-      setError("User not found. Please sign up again.");
-      navigate("/signup"); // Redirect user back to signup
+      toast.error("User not found. Please sign up again.");
+      navigate("/signup");
     }
   }, [navigate]);
 
+  // ✅ Validate Inputs
+  const validateInputs = () => {
+    let newErrors = {};
+
+    if (!username.trim() || username.length < 3 || !/^\w+$/.test(username)) {
+      newErrors.username = "Username must be at least 3 characters (letters, numbers, underscores only).";
+    }
+
+    if (!selectedCategory) {
+      newErrors.selectedCategory = "Please select a category.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // ✅ If no errors, return true
+  };
+
   const handleSubmit = async () => {
-    const userId = localStorage.getItem("userId"); // Retrieve user ID from storage
+    if (!validateInputs()) {
+      toast.warn("⚠️ Please fill in all required fields.");
+      return; // Stop if inputs are invalid
+    }
+
+    const userId = localStorage.getItem("userId");
 
     if (!userId) {
-      setError("User not found. Please sign up again.");
+      toast.error("User not found. Please sign up again.");
       return;
     }
 
@@ -51,20 +74,22 @@ const Details = () => {
 
       const result = await response.json();
       if (result.success) {
-        alert("Details updated successfully!");
-        localStorage.removeItem("userId"); // ✅ Clear userId after details are set
-        navigate("/login"); // ✅ Redirect to login page after updating details
+        toast.success("✅ Details updated successfully!");
+        localStorage.removeItem("userId");
+        setTimeout(() => navigate("/login"), 2000); // ✅ Redirect after 2 seconds
       } else {
-        setError(result.message);
+        toast.error(`❌ ${result.message}`);
       }
     } catch (error) {
       console.error("Error:", error);
-      setError("Something went wrong. Try again later.");
+      toast.error("❌ Something went wrong. Try again later.");
     }
   };
 
   return (
     <div className="container-us">
+      <ToastContainer position="top-center" autoClose={3000} />  {/* ✅ Add ToastContainer Here */}
+
       <div className="left-us">
         <div className="logo-us">
           <img src="sparklogo.png" alt="Spark Logo" /> SPARK
@@ -80,29 +105,36 @@ const Details = () => {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
+          {errors.username && <p className="error">{errors.username}</p>}
 
           <p>Select one category that best describes your Linktree:</p>
           <div className="categories-us">
-            {categories.map((category) => (
+            {Object.keys(categoryImages).map((category) => (
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
                 className={`category-button-us ${selectedCategory === category ? "selected-us" : ""}`}
               >
+                <img src={categoryImages[category]} alt={category} className="category-icon-us" />
                 {category}
               </button>
             ))}
           </div>
-
-          {error && <p className="error-message">{error}</p>}
+          {errors.selectedCategory && <p className="error">{errors.selectedCategory}</p>}
 
           <button className="continue-button-us" onClick={handleSubmit}>
             Continue
           </button>
         </div>
       </div>
+
+      {/* ✅ Dynamically Update Background Image Based on Selected Category */}
       <div className="right-us">
-        <img src="wallpaper.png" alt="Background" className="background-image-us" />
+        <img
+          src="wallpaper.png"
+          alt="Category Background"
+          className="background-image-us"
+        />
       </div>
     </div>
   );

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./EditModal.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const EditModal = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) => {
   const [linkTitle, setLinkTitle] = useState("");
@@ -44,7 +46,7 @@ const EditModal = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) =
   // **Handle updating an existing entry**
   const handleUpdate = async () => {
     if (!validateForm()) return;
-
+  
     const updatedEntry = {
       ...entry,
       title: linkTitle,
@@ -54,33 +56,40 @@ const EditModal = ({ closeModal, activeTab, addNewEntry, entry, updateEntry }) =
       type: currentTab,
       enabled: isEnabled,
     };
-
+  
     try {
       const token = localStorage.getItem("token");
-      const response = await fetch(`https://linktree-backend-0abv.onrender.com/api/edit-entry/${entry._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
-        },
-        body: JSON.stringify(updatedEntry),
-      });
-
+      const response = await fetch(
+        `https://linktree-backend-0abv.onrender.com/api/edit-entry/${entry._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedEntry),
+        }
+      );
+  
       const data = await response.json();
       if (data.success) {
         updateEntry(updatedEntry);
-        alert("Entry updated successfully!");
+        toast.success("Entry updated successfully! 🎉");
         closeModal();
       } else {
-        alert("Failed to update entry: " + data.message);
+        toast.error("Failed to update entry: " + data.message);
       }
     } catch (error) {
       console.error("Error updating entry:", error);
+      toast.error("Something went wrong. Try again later!");
     }
   };
+  
 
   return (
     <div className="modal-overlay-edit" onClick={handleOverlayClick}>
+      <ToastContainer position="top-right" autoClose={3000} />
+
       <div className="modal-container-edit">
         <div className="tab-container-edit">
           <button className={`tab-btn-edit ${currentTab === "link" ? "active" : ""}`} onClick={() => setCurrentTab("link")}>

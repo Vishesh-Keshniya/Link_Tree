@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import "./Appearance.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Appearance({
   setLayout,
@@ -13,37 +15,29 @@ function Appearance({
   setSelectedTheme,
   setSelectedLiTheme,
 }) {
-  // State for layout
+
   const [isLoading, setIsLoading] = useState(true);
 
-  // State for layout
-  const [activeLayout, setActiveLayoutState] = useState(null); // 🚀 Default to null
+  const [activeLayout, setActiveLayoutState] = useState(null); 
 
-  // State for colors
   const [linkBgColor, setLocalLinkBgColor] = useState("");
   const [linkFontColor, setLocalLinkFontColor] = useState("");
   const [phoneFontColor, setLocalPhoneFontColor] = useState("");
 
-  // State for fonts
   const [selectedFont, setSelectedFont] = useState("");
   const [showDropdown, setShowDropdown] = useState("");
 
-  // State for themes
   const [isThemeActive, setIsThemeActive] = useState(false);
   const [selectedTheme, setSelectedThemeState] = useState("");
   const [selectedLiTheme, setSelectedLiThemeState] = useState("");
 
-  // State for button style and shadow style
   const [buttonStyle, setLocalButtonStyle] = useState("");
   const [shadowStyle, setLocalShadowStyle] = useState("");
-  // Refs for color pickers
+
   const linkBgColorInputRef = useRef(null);
   const linkFontColorInputRef = useRef(null);
   const phoneFontColorInputRef = useRef(null);
 
-
-  
-  // Fetch saved settings on component mount
   useEffect(() => {
     const fetchSettings = async () => {
       try {
@@ -54,104 +48,91 @@ function Appearance({
         });
         const data = await response.json();
 
-        
         if (data.settings) {
           setActiveLayoutState(data.settings.layout);
-          setLayout(data.settings.layout); // ✅ Sync with parent
-          
+          setLayout(data.settings.layout); 
+
           setLocalLinkBgColor(data.settings.linkBgColor);
-          setLinkBgColor(data.settings.linkBgColor); // ✅ Sync with parent
-          
+          setLinkBgColor(data.settings.linkBgColor); 
+
           setLocalLinkFontColor(data.settings.linkFontColor);
-          setLinkFontColor(data.settings.linkFontColor); // ✅ Sync with parent
-          
+          setLinkFontColor(data.settings.linkFontColor); 
+
           setLocalPhoneFontColor(data.settings.phoneFontColor);
-          setPhoneFontColor(data.settings.phoneFontColor); // ✅ Sync with parent
-          
+          setPhoneFontColor(data.settings.phoneFontColor); 
+
           setSelectedFont(data.settings.selectedFont);
-          setFont(data.settings.selectedFont); // ✅ Sync with parent
-          
+          setFont(data.settings.selectedFont); 
+
           setSelectedThemeState(data.settings.selectedTheme || "");
-          setSelectedTheme(data.settings.selectedTheme || ""); // ✅ Sync with parent
-          
+          setSelectedTheme(data.settings.selectedTheme || ""); 
+
           setSelectedLiThemeState(data.settings.selectedLiTheme || "");
-          setSelectedLiTheme(data.settings.selectedLiTheme || ""); // ✅ Sync with parent
-          
+          setSelectedLiTheme(data.settings.selectedLiTheme || ""); 
+
           setLocalButtonStyle(data.settings.buttonStyle || "solid");
-          setButtonStyle(data.settings.buttonStyle || "solid"); // ✅ Sync with parent
-          
+          setButtonStyle(data.settings.buttonStyle || "solid"); 
+
           setLocalShadowStyle(data.settings.shadowStyle || "soft");
-          setShadowStyle(data.settings.shadowStyle || "soft"); // ✅ Sync with parent
-          
+          setShadowStyle(data.settings.shadowStyle || "soft"); 
+
           setIsThemeActive(!!data.settings.selectedTheme);
         }
       } catch (error) {
         console.error("Error fetching settings:", error);
       }
     };
-  
+
     fetchSettings();
   }, []);
-  
 
-  // Handle layout change
   const handleLayoutChange = (layoutType) => {
     setActiveLayoutState(layoutType);
     setLayout(layoutType);
   };
 
-  // Handle font selection
   const handleFontSelect = (font) => {
     setSelectedFont(font);
     setFont(font);
     setShowDropdown(false);
   };
-  // Handle button style change
+
 const handleButtonStyleChange = (style) => {
-  setLocalButtonStyle(style); // Update local state
-  setButtonStyle(style); // Update parent component state
+  setLocalButtonStyle(style); 
+  setButtonStyle(style); 
 };
 
-// Handle shadow style change
-
-  // Handle theme change
   const handleThemeChange = (theme, liTheme) => {
-    setSelectedThemeState(theme); // Update local theme state
-    setSelectedLiThemeState(liTheme); // Update local link theme state
-    setSelectedTheme(theme); // Update parent component state
-    setSelectedLiTheme(liTheme); // Update parent component state
-    setIsThemeActive(true); // Activate theme
+    setSelectedThemeState(theme); 
+    setSelectedLiThemeState(liTheme); 
+    setSelectedTheme(theme); 
+    setSelectedLiTheme(liTheme); 
+    setIsThemeActive(true); 
   };
 
-  // Handle link background color change
   const handleLinkBgColorClick = () => {
     setIsThemeActive(false);
     linkBgColorInputRef.current?.click();
   };
 
-  // Handle link font color change
   const handleLinkFontColorClick = () => linkFontColorInputRef.current?.click();
 
-  // Handle phone font color change
   const handlePhoneFontColorClick = () => phoneFontColorInputRef.current?.click();
 
-  // Save appearance settings
   const saveAppearanceSettings = async () => {
     const settings = {
       layout: activeLayout,
-      shadowStyle: shadowStyle, // Use local shadow style state
-      borderStyle: "rounded", // Use local border style state (if applicable)
-      buttonStyle: buttonStyle, // Use local button style state
+      shadowStyle,
+      borderStyle: "rounded",
+      buttonStyle,
       linkBgColor,
       linkFontColor,
       phoneFontColor,
       selectedFont,
-      selectedTheme, // Use local theme state
-      selectedLiTheme, // Use local link theme state
+      selectedTheme,
+      selectedLiTheme,
     };
-  
-    console.log("Sending settings:", settings); // Log the settings object
-  
+
     try {
       const response = await fetch("https://linktree-backend-0abv.onrender.com/api/save-appearance", {
         method: "POST",
@@ -161,27 +142,28 @@ const handleButtonStyleChange = (style) => {
         },
         body: JSON.stringify({ settings }),
       });
-  
-      const data = await response.json(); // Parse the response body
-  
+
+      const data = await response.json();
+
       if (response.ok) {
-        window.location.reload();
-
-        alert("Settings saved successfully!");
-                window.location.reload();
-
+        toast.success("✅ Settings saved successfully!", { autoClose: 2000 });
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
-        console.error("Backend error:", data.message || "Unknown error");
-        alert(`Failed to save settings: ${data.message}`);
+        toast.error(`❌ Failed to save settings: ${data.message}`);
       }
     } catch (error) {
       console.error("Error saving settings:", error);
-      alert("An error occurred while saving settings.");
+      toast.error("❌ An error occurred while saving settings.");
     }
   };
+
   return (
     <div className="al-container">
-      {/* Layout Section */}
+      <ToastContainer position="top-center" autoClose={3000} />
+
+      {}
       <div className="layout-app">
         <h1>Layout</h1>
         <div className="lay-contaier">
@@ -215,11 +197,11 @@ const handleButtonStyleChange = (style) => {
         </div>
       </div>
 
-      {/* Buttons Section */}
+      {}
       <div className="buttons-app">
         <h1>Buttons</h1>
         <div className="buttons-container">
-          {/* Fill Buttons */}
+          {}
           <div className="textss">Fill</div>
           <div className="button-row">
             <button className="button-fill solid" onClick={() => handleButtonStyleChange("solid")}>
@@ -233,7 +215,7 @@ const handleButtonStyleChange = (style) => {
             </button>
           </div>
 
-          {/* Outline Buttons */}
+          {}
           <div className="textss">Outline</div>
           <div className="button-row">
             <button className="button-outline" onClick={() => handleButtonStyleChange("out")}>
@@ -247,7 +229,7 @@ const handleButtonStyleChange = (style) => {
             </button>
           </div>
 
-          {/* Hard Shadow Buttons */}
+          {}
           <div className="textss">Hard Shadow</div>
           <div className="button-row">
             <button className="button-hard-shadow" onClick={() => handleButtonStyleChange("hs1")}>
@@ -261,13 +243,13 @@ const handleButtonStyleChange = (style) => {
             </button>
           </div>
 
-          {/* Soft Shadow Buttons */}
+          {}
           <div className="textss">Soft Shadow</div>
           <div className="button-row">
             <button className="button-soft-shadow" onClick={() => handleButtonStyleChange("bs1")}>
             <img src="41.png" alt="Double Outline" />
             </button>
-            
+
             <button className="button-soft-shadow-round" onClick={() => handleButtonStyleChange("bs2")}>
             <img src="42.png" alt="Double Outline" />
             </button>
@@ -276,7 +258,7 @@ const handleButtonStyleChange = (style) => {
             </button>
           </div>
 
-          {/* Special Buttons */}
+          {}
           <div className="textss">Special</div>
           <div className="button-row">
             <button className="button-special-wavy" onClick={() => handleButtonStyleChange("button-special-wavy")}>
@@ -301,7 +283,7 @@ const handleButtonStyleChange = (style) => {
             </button>
           </div>
 
-          {/* Button Color Pickers */}
+          {}
           <div className="color-picker">
             <label className="color-picker-label">Link Background Color</label>
             <div className="color-picker-container">
@@ -354,7 +336,7 @@ const handleButtonStyleChange = (style) => {
           </div>
         </div>
 
-        {/* Font Section */}
+        {}
         <h2 className="title">Fonts</h2>
         <div className="font-app">
           <div className="font-box" onClick={() => setShowDropdown(!showDropdown)}>
@@ -401,7 +383,7 @@ const handleButtonStyleChange = (style) => {
           </div>
         </div>
 
-        {/* Theme Section */}
+        {}
         <h2 className="title">Theme</h2>
         <div className="theme-container">
           <button className="theme-button air-snow" onClick={() => handleThemeChange("airsnow", "airsnowli")}>
@@ -445,7 +427,7 @@ const handleButtonStyleChange = (style) => {
           </button>
         </div>
 
-        {/* Save Button */}
+        {}
        <div className="savedi"> <button className="appsave" onClick={saveAppearanceSettings}>Save</button></div>
       </div>
     </div>

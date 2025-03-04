@@ -9,7 +9,7 @@ import SettingComp from "../SettingComp";
 const DashContent = ({ activeSection }) => {
   const [fullName, setFullName] = useState("");
   const [bio, setBio] = useState("");
-  const [phoneHeaderColor, setPhoneHeaderColor] = useState("#000000");
+  const [phoneHeaderColor, setPhoneHeaderColor] = useState("#FFFFFF");
   const [layout, setLayout] = useState(localStorage.getItem("layout") || "stack");
   const [shadowStyle, setShadowStyle] = useState(localStorage.getItem("shadowStyle") || "shadow-soft");
   const [borderStyle, setBorderStyle] = useState(localStorage.getItem("borderStyle") || "border-rounded");
@@ -20,12 +20,10 @@ const DashContent = ({ activeSection }) => {
   const [phoneFontColor, setPhoneFontColor] = useState(localStorage.getItem("phoneFontColor") || "#D9D9D9");
   const [selectedTheme, setSelectedTheme] = useState(localStorage.getItem("selectedTheme") || "air-snow");
   const [selectedLiTheme, setSelectedLiTheme] = useState(localStorage.getItem("selectedLiTheme") || "airsnowli");
-  const [userId, setUserId] = useState(null); // Add userId state
+  const [userId, setUserId] = useState(null); 
   const [loading, setLoading] = useState(true);
-    const [showLogout, setShowLogout] = useState(false); // ✅ Toggle state for logout button
-  
+    const [showLogout, setShowLogout] = useState(false); 
 
-  // Fetch user data and settings
   useEffect(() => {
     const fetchUser = async () => {
       try {
@@ -41,16 +39,15 @@ const DashContent = ({ activeSection }) => {
         if (data.success) {
           setFullName(`${data.user.firstName} ${data.user.lastName}`);
           setBio(data.user.bio || "");
-          setUserId(data.user._id); // Set userId from the response
+          setUserId(data.user._id); 
 
-          // Set appearance settings
           if (data.user.settings) {
             setLayout(data.user.settings.layout || "stack");
             setShadowStyle(data.user.settings.shadowStyle || "shadow-soft");
             setBorderStyle(data.user.settings.borderStyle || "border-rounded");
             setButtonStyle(data.user.settings.buttonStyle || "button-fill");
             setLinkBgColor(data.user.settings.linkBgColor || "#FFFFFF");
-            setLinkFontColor(data.user.settings.linkFontColor || "#000000");
+            setLinkFontColor(data.user.settings.linkFontColor || "#FFFFFF");
             setFont(data.user.settings.font || "DM Sans");
             setPhoneFontColor(data.user.settings.phoneFontColor || "#D9D9D9");
             setSelectedTheme(data.user.settings.selectedTheme || "air-snow");
@@ -67,7 +64,6 @@ const DashContent = ({ activeSection }) => {
     fetchUser();
   }, []);
 
-  // Save state to local storage
   useEffect(() => {
     localStorage.setItem("layout", layout);
     localStorage.setItem("shadowStyle", shadowStyle);
@@ -82,8 +78,8 @@ const DashContent = ({ activeSection }) => {
   }, [layout, shadowStyle, borderStyle, buttonStyle, linkBgColor, linkFontColor, font, phoneFontColor, selectedTheme, selectedLiTheme]);
 
   const handleLogout = () => {
-    localStorage.removeItem("token"); // Remove token
-    navigate("/login"); // Redirect to login page
+    localStorage.removeItem("token"); 
+    navigate("/login"); 
   };
   if (loading) {
     return <div>Loading...</div>;
@@ -91,7 +87,7 @@ const DashContent = ({ activeSection }) => {
 
   return (
     <div className="dashboard-container">
-      {/* Header Section */}
+      {}
       <div className="header">
         <h2>
           Hi, <b className="name-cont">{fullName || "Loading..."}</b>!
@@ -101,7 +97,7 @@ const DashContent = ({ activeSection }) => {
           <img src="share.png" alt="Share Icon" /> <a href="https://link-tree-eta-beryl.vercel.app/">Share </a>
         </button>
       </div>
-      
+
       <nav className="phone-nav">
         <div className="navlogo">
           <img src="navlog.png"></img>
@@ -109,24 +105,23 @@ const DashContent = ({ activeSection }) => {
         <div className="navav">
           <button onClick={() => setShowLogout(!showLogout)}><img src="ava.png"></img></button>
 
-        
         </div>
         {showLogout && (
           <button className="logout-btn-ph" onClick={handleLogout}>
           <img src="out.png"></img> Sign out
           </button>
         )}
-        
+
       </nav>
 
-      {/* Dashboard Content */}
+      {}
       <div className="dashboard-content">
         {activeSection === "Links" && (
           <>
             <div className="mobile-preview">
               <PhoneView
                 bio={bio}
-                userId={userId} // Pass userId as a prop
+                userId={userId} 
                 phoneHeaderColor={phoneHeaderColor}
                 layout={layout}
                 shadowStyle={shadowStyle}
@@ -156,7 +151,7 @@ const DashContent = ({ activeSection }) => {
             <div className="mobile-preview">
               <PhoneView
                 bio={bio}
-                userId={userId} // Pass userId as a prop
+                userId={userId} 
                 phoneHeaderColor={phoneHeaderColor}
                 layout={layout}
                 shadowStyle={shadowStyle}
@@ -187,13 +182,10 @@ const DashContent = ({ activeSection }) => {
           </>
         )}
 
-       
       </div>
       {activeSection === "Analytics" && <Analytics/>}
 
-        
 {activeSection === "Settings" && <SettingComp/>}
-
 
     </div>
   );

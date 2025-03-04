@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import "./AddModal.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
   const [linkTitle, setLinkTitle] = useState("");
@@ -64,56 +67,58 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
       const data = await response.json();
   
       if (data.success) {
-        addNewEntry(entry); 
-        alert("Entry added successfully!");
-        closeModal(); // Close the modal
-        window.location.reload(); // Refresh the page
+        addNewEntry(entry);
+        toast.success("✅ Entry added successfully!", { autoClose: 2000 });
+        setTimeout(() => {
+          closeModal(); // Close the modal
+          window.location.reload(); // Refresh the page
+        }, 2000);
       } else {
-        alert("Failed to add entry: " + data.message);
+        toast.error(`❌ Failed to add entry: ${data.message}`);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("An error occurred while adding the entry.");
+      toast.error("❌ An error occurred while adding the entry.");
     }
   };
   
-  // Function to handle toggle switch change
+
   const handleToggleChange = () => {
     setIsEnabled(!isEnabled);
     if (!isEnabled) {
-      handleSubmit(); // Submit the form when the toggle is enabled
+      handleSubmit(); 
     }
   };
 
-  // Function to handle application icon click
   const handleAppClick = (appName) => {
-    setSelectedApp(appName); // Set the selected application name
-    setError(""); // Clear any previous error message
+    setSelectedApp(appName); 
+    setError(""); 
   };
 
-  // Function to reset input fields
   const handleDeleteClick = () => {
-    setLinkTitle(""); // Reset link title
-    setLinkUrl(""); // Reset link URL
-    setSelectedApp(""); // Reset selected app
-    setError(""); // Clear any error message
+    setLinkTitle(""); 
+    setLinkUrl(""); 
+    setSelectedApp(""); 
+    setError(""); 
   };
 
-  // Function to copy the link URL to the clipboard
   const handleCopyClick = () => {
     if (linkUrl) {
-      navigator.clipboard.writeText(linkUrl) // Copy the URL to the clipboard
-        .then(() => alert("Link copied to clipboard!"))
-        .catch(() => alert("Failed to copy link."));
+      navigator.clipboard.writeText(linkUrl) 
+        .then(() => toast.success("✅ Link copied to clipboard!", { autoClose: 2000 }))
+        .catch(() => toast.error("❌ Failed to copy link."));
     } else {
-      alert("No link to copy.");
+      toast.warning("⚠️ No link to copy.");
     }
   };
+  
 
   return (
     <div className="modal-overlay" onClick={handleOverlayClick}>
+      <ToastContainer position="top-center" autoClose={3000} />
+
       <div className="modal-container">
-        {/* Tabs for Add Link & Add Shop */}
+        {}
         <div className="tab-container">
           <button 
             className={`tab-btn ${currentTab === "link" ? "active" : ""}`} 
@@ -129,7 +134,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
           </button>
         </div>
 
-        {/* Modal Content */}
+        {}
         <div className="modal-content">
           <h3>{currentTab === "link" ? "Add a New Link" : "Add a New Shop"}</h3>
 
@@ -143,14 +148,14 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
                 onChange={(e) => setLinkTitle(e.target.value)}
                 required
               />
-              
-              {/* Toggle switch for both "Link" and "Shop" */}
+
+              {}
               <div className="toggle-container">
                 <label className="switch">
                   <input
                     type="checkbox"
                     checked={isEnabled}
-                    onChange={handleToggleChange} // Use the new handler
+                    onChange={handleToggleChange} 
                   />
                   <span className="slider"></span>
                 </label>
@@ -166,11 +171,11 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
                 onChange={(e) => setLinkUrl(e.target.value)}
                 required
               />
-              {/* Copy Button */}
+              {}
               <button type="button" onClick={handleCopyClick}>
                 <img src="copy.png" alt="Copy" />
               </button>
-              {/* Delete Button */}
+              {}
               <button type="button" onClick={handleDeleteClick}>
                 <img src="del.png" alt="Delete" />
               </button>
@@ -178,14 +183,14 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
 
             <h4>Applications</h4>
 
-            {/* Show app-grid for "Add Link" */}
+            {}
             {currentTab === "link" && (
               <div className="app-grid">
                 <div className="modal-ic">
                   <button 
                     type="button" 
                     className={`ic-btn ${selectedApp === "Instagram" ? "selected" : ""}`}
-                    onClick={() => handleAppClick("Instagram")} // Handle Instagram click
+                    onClick={() => handleAppClick("Instagram")} 
                   >
                     <img src="instr.png" alt="Instagram" />
                   </button> 
@@ -195,7 +200,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
                   <button 
                     type="button" 
                     className={`ic-btn ${selectedApp === "Facebook" ? "selected" : ""}`}
-                    onClick={() => handleAppClick("Facebook")} // Handle Facebook click
+                    onClick={() => handleAppClick("Facebook")} 
                   >
                     <img src="fb.png" alt="Facebook" />
                   </button> 
@@ -205,7 +210,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
                   <button 
                     type="button" 
                     className={`ic-btn ${selectedApp === "YouTube" ? "selected" : ""}`}
-                    onClick={() => handleAppClick("YouTube")} // Handle YouTube click
+                    onClick={() => handleAppClick("YouTube")} 
                   >
                     <img src="ytr.png" alt="YouTube" />
                   </button> 
@@ -215,7 +220,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
                   <button 
                     type="button" 
                     className={`ic-btn ${selectedApp === "X" ? "selected" : ""}`}
-                    onClick={() => handleAppClick("X")} // Handle X click
+                    onClick={() => handleAppClick("X")} 
                   >
                     <img src="x.png" alt="X" />
                   </button> 
@@ -224,14 +229,14 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
               </div>
             )}
 
-            {/* Show app-grid-shop for "Add Shop" */}
+            {}
             {currentTab === "shop" && (
               <div className="app-grid-shop">
                 <div className="modal-ic">
                   <button 
                     type="button" 
                     className={`ic-btn ${selectedApp === "Swiggi" ? "selected" : ""}`}
-                    onClick={() => handleAppClick("Swiggi")} // Handle Swiggi click
+                    onClick={() => handleAppClick("Swiggi")} 
                   >
                     <img src="swiggi.png" alt="Swiggi" />
                   </button> 
@@ -241,7 +246,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
                   <button 
                     type="button" 
                     className={`ic-btn ${selectedApp === "Flipkart" ? "selected" : ""}`}
-                    onClick={() => handleAppClick("Flipkart")} // Handle Flipkart click
+                    onClick={() => handleAppClick("Flipkart")} 
                   >
                     <img src="flipkart.png" alt="Flipkart" />
                   </button> 
@@ -251,7 +256,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
                   <button 
                     type="button" 
                     className={`ic-btn ${selectedApp === "Zomato" ? "selected" : ""}`}
-                    onClick={() => handleAppClick("Zomato")} // Handle Zomato click
+                    onClick={() => handleAppClick("Zomato")} 
                   >
                     <img src="zomato.png" alt="Zomato" />
                   </button> 
@@ -261,7 +266,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
                   <button 
                     type="button" 
                     className={`ic-btn ${selectedApp === "Other" ? "selected" : ""}`}
-                    onClick={() => handleAppClick("Other")} // Handle Other click
+                    onClick={() => handleAppClick("Other")} 
                   >
                     <img src="shop.png" alt="Other" />
                   </button> 
@@ -270,7 +275,7 @@ const AddModal = ({ closeModal, activeTab, addNewEntry }) => {
               </div>
             )}
 
-            {/* Display error message if no application is selected */}
+            {}
             {error && <p className="error-message">{error}</p>}
           </form>
         </div>

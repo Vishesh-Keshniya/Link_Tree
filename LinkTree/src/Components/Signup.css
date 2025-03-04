@@ -4,7 +4,15 @@
     padding: 0;
     box-sizing: border-box;
   }
+
+  .error{
+    color: red;
+  }
   
+  .error-message{
+    margin-top: 10px;
+    color: red;
+  }
   body {
     font-family: Arial, sans-serif;
   }
@@ -20,7 +28,8 @@
   }
   .signup-container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
   }
   
   /* Left Side (Form) */
@@ -159,7 +168,10 @@
     font-size: 10px;
   }
 
- 
+ .slo{
+  display: flex;
+  margin-left: -150px;
+ }
   /* Responsive Design */
  /* Responsive Design */
 
@@ -171,7 +183,6 @@
        height: fit-content;
     padding: 0;
     width: fit-content;
-
     }
 
     .signup-left {
@@ -184,8 +195,7 @@
 
     .logo
     {
-      margin-left: 100px;
-      padding-top: 10px;
+     
      
     }
       .signup-left h1
@@ -219,28 +229,28 @@
 
 @media (max-width: 480px) {
   .signup-container {
+    transform: scale(0.8); 
     flex-direction: column;
     align-items: center;
    
-    height: fit-content;
+    
     padding-top: 20px;
-    width: fit-content;
+   width: 100%;
     margin: 0;
 
 }
 
+
+
 .signup-left {
    
-  width: 120%;
+  
   padding: 0;
+  margin-top: -100px;
+  
 }
 
-.logo
-{
-  margin-left: 155px;
-  padding-top: 10px;
- 
-}
+
   .signup-left h1
 {
   font-size: 20px;
@@ -260,15 +270,10 @@ h1 {
 input {
     font-size: 14px;
     padding: 0;
-  
-   
 }
-
-button {
-    font-size: 16px;
-    background: none;
-   
-   
-}
-
+.signupbtn2{
+  font-size: 16px;
+  padding: 10px;
+  background: green;
+  color: #E0E2D9;}
 }

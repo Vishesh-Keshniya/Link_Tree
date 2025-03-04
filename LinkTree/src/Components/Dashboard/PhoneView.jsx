@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import { useNavigate } from "react-router-dom"; 
 import "./PhoneView.css";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, shadowStyle, borderStyle, buttonStyle, linkBgColor = "#D9D9D9", linkFontColor = "#F5F5F3", font = "DM Sans", phoneFontColor = "#000000", selectedTheme, selectedLiTheme }) => {
+
+const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, shadowStyle, borderStyle, buttonStyle, linkBgColor = "#D9D9D9", linkFontColor = "#F5F5F3", font = "DM Sans", phoneFontColor = "#FFFFFF", selectedTheme, selectedLiTheme }) => {
   const [links, setLinks] = useState([]);
   const [shopLinks, setShopLinks] = useState([]);
   const [showShopLinks, setShowShopLinks] = useState(false);
   const [userName, setUserName] = useState("");
   const [profileImage, setProfileImage] = useState("ava.png");
   const [loading, setLoading] = useState(true);
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate(); 
   const [sharedLink, setSharedLink] = useState("");
 
-
-  // Fetch user details (name)
   const fetchUserDetails = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -39,7 +40,6 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
     }
   };
 
-  // Fetch links
   const fetchLinks = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -58,7 +58,6 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
     }
   };
 
-  // Fetch shop links
   const fetchShopLinks = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -84,35 +83,32 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
   }, []);
 
   const generateShareableLink = () => {
-    return `${window.location.origin}/public-profile/${userId}`; // Link to PublicProfileView
+    return `${window.location.origin}/public-profile/${userId}`; 
   };
 
-  // Handle Share Button Click
   const handleShareClick = async () => {
     const shareableLink = generateShareableLink();
-    setSharedLink(shareableLink); // Store the link in state
+    setSharedLink(shareableLink);
   
     try {
       await navigator.clipboard.writeText(shareableLink);
-      alert("✅ Link copied to clipboard!");
+      toast.success("✅ Link copied to clipboard!");
     } catch (error) {
       console.error("❌ Failed to copy link:", error);
-      alert("❌ Failed to copy link. Please try again.");
+      toast.error("❌ Failed to copy link. Please try again.");
     }
   };
   
-
   const handleLinkClick = async (linkId, type) => {
     console.log("Sending Click Data:", { linkId, type });
   
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("Unauthorized. Please log in.");
+        toast.error("❌ Unauthorized. Please log in.");
         return;
       }
   
-      // ✅ Fix: Send `linkId` only when it's valid
       const bodyData = linkId && linkId !== "button_click" ? { linkId, type } : { type };
   
       const response = await fetch("https://linktree-backend-0abv.onrender.com/api/increment-clickss", {
@@ -129,21 +125,21 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
   
       if (!data.success) {
         console.error("Error incrementing clicks:", data.message);
-        return;
+        toast.error(`❌ ${data.message}`);
       }
     } catch (error) {
       console.error("Error tracking click:", error);
+      toast.error("❌ Failed to track click.");
     }
   };
   
-
   const handleCtaClick = async () => {
     console.log("CTA Click Tracked");
   
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("Unauthorized. Please log in.");
+        toast.error("❌ Unauthorized. Please log in.");
         return;
       }
   
@@ -160,13 +156,13 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
   
       if (!data.success) {
         console.error("Error incrementing CTA clicks:", data.message);
+        toast.error(`❌ ${data.message}`);
       }
     } catch (error) {
       console.error("Error tracking CTA click:", error);
+      toast.error("❌ Something went wrong. Try again.");
     }
   };
-  
-
 
   if (loading) {
     return <div>Loading...</div>;
@@ -174,7 +170,7 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
 
   return (
     <div className={`phone-container ${selectedTheme}`} style={{ fontFamily: font, color: phoneFontColor }}>
-      {/* Profile Section */}
+      {}
       <div className={`phone-profile ${selectedTheme}`} style={{ backgroundColor: phoneHeaderColor }}>
         <div className="phone-header">
           <button className="share-btn-ph" onClick={handleShareClick}>
@@ -186,8 +182,8 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
   alt="User Avatar"
   className="profile-img"
   onError={(e) => {
-    e.target.onerror = null; // Prevent infinite loop
-    e.target.src = "https://linktree-backend-0abv.onrender.com/uploads/ava.png"; // Fallback image
+    e.target.onerror = null; 
+    e.target.src = "https://linktree-backend-0abv.onrender.com/uploads/ava.png"; 
   }}
 />
 
@@ -199,7 +195,7 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
         </p>
       </div>
 
-      {/* Navigation Buttons */}
+      {}
       <div className="phone-buttons">
         <button
           className={`btn-link ${!showShopLinks ? "active" : ""}`}
@@ -221,7 +217,7 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
         </button>
       </div>
 
-      {/* Links Section */}
+      {}
       <ul className={`phone-links ${layout}`}>
         {(showShopLinks ? shopLinks : links).length > 0 ? (
           (showShopLinks ? shopLinks : links).map((link, index) => (
@@ -265,7 +261,7 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
         )}
       </ul>
 
-      {/* Connect Button */}
+      {}
       <div className="phone-connect">
         <button className="connect-btn" onClick={handleCtaClick}><a href="https://link-tree-eta-beryl.vercel.app/">Get Connected</a></button>
         <p className="spark-logo">

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";  // ✅ Import ToastContainer & toast
+import "react-toastify/dist/ReactToastify.css";  // ✅ Import Toast styles
 import "./Login.css";
 
 const Login = () => {
@@ -7,21 +9,37 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState("");
+  const [errors, setErrors] = useState({});
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  // ✅ Validate inputs before submission
+  const validateInputs = () => {
+    let newErrors = {};
+
+    if (!username.trim() || username.length < 3 || !/^\w+$/.test(username)) {
+      newErrors.username = "Username must be at least 3 characters (letters, numbers, underscores only).";
+    }
+
+    const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!password.match(passwordRegex)) {
+      newErrors.password = "Password must be 8+ chars, include an uppercase, a number, and a special character.";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleLoginSuccess = async () => {
     try {
       const response = await fetch("https://linktree-backend-0abv.onrender.com/api/track-login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username }),
       });
-  
+
       const result = await response.json();
       console.log(result.message);
     } catch (error) {
@@ -29,9 +47,12 @@ const Login = () => {
     }
   };
 
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateInputs()) {
+      return; // Stop if inputs are invalid
+    }
 
     const loginData = { username, password };
 
@@ -44,23 +65,27 @@ const Login = () => {
 
       const result = await response.json();
       if (result.success) {
-        alert("Login Successful!");
-        localStorage.setItem("token", result.token); // Store JWT token
-        localStorage.setItem("username", result.username); // Store username
- await handleLoginSuccess();
-        
-        navigate("/dashboard"); // Redirect to dashboard
+        toast.success("✅ Login Successful! Redirecting...", { autoClose: 2000 });
+        localStorage.setItem("token", result.token);
+        localStorage.setItem("username", result.username);
+        await handleLoginSuccess();
+
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000); // ✅ Redirect after 2 seconds
       } else {
-        setError(result.message);
+        toast.error(`❌ ${result.message}`);
       }
     } catch (error) {
       console.error("Error:", error);
-      setError("Something went wrong. Try again later.");
+      toast.error("❌ Something went wrong. Try again later.");
     }
   };
 
   return (
     <div className="signup-container-login">
+      <ToastContainer position="top-center" autoClose={3000} />  {/* ✅ Add ToastContainer Here */}
+
       <div className="signup-left-login">
         <div className="logo-login">
           <img src="sparklogo.png" alt="Spark Logo" /> SPARK™
@@ -76,6 +101,7 @@ const Login = () => {
               onChange={(e) => setUsername(e.target.value)}
               required
             />
+            {errors.username && <p className="error">{errors.username}</p>}
 
             <div className="password-container">
               <input
@@ -97,8 +123,7 @@ const Login = () => {
                 )}
               </button>
             </div>
-
-            {error && <p className="error-message">{error}</p>}
+            {errors.password && <p className="error">{errors.password}</p>}
 
             <button type="submit" className="login">Log in</button>
           </form>

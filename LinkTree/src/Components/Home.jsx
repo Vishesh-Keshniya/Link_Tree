@@ -359,7 +359,7 @@ const Home = () => {
       </div>
 
 
-    <div className="container-2-wrapper">
+    <div className="container-3-wrapper">
     <div className="footer-container">
       <div className="footer-header">
         <div className="button-group">

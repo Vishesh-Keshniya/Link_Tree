@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react"; // ✅ Import useEffect
+import React, { useEffect, useState } from "react"; 
 import Sidebar from "./Sidebar";
 import DashContent from "./Dashboard/Dashcontent";
-import PhoneView from "./Dashboard/PhoneView"; // Import PhoneView component
+import PhoneView from "./Dashboard/PhoneView"; 
 import "./Dashboard.css";
 
 function Dashboard() {
-  const [activeSection, setActiveSection] = useState("Links"); // Default section
-  const [showPhoneView, setShowPhoneView] = useState(false); // State to toggle PhoneView
-  const [userId, setUserId] = useState(null); // ✅ Set userId as null initially
-  const [loading, setLoading] = useState(true); // ✅ Loading state
+  const [activeSection, setActiveSection] = useState("Links"); 
+  const [showPhoneView, setShowPhoneView] = useState(false); 
+  const [userId, setUserId] = useState(null); 
+  const [loading, setLoading] = useState(true); 
   const [bio, setBio] = useState("");
-  const [phoneHeaderColor, setPhoneHeaderColor] = useState("#000000");
+  const [phoneHeaderColor, setPhoneHeaderColor] = useState("#FFFFFF");
   const [layout, setLayout] = useState(localStorage.getItem("layout") || "stack");
   const [shadowStyle, setShadowStyle] = useState(localStorage.getItem("shadowStyle") || "shadow-soft");
   const [borderStyle, setBorderStyle] = useState(localStorage.getItem("borderStyle") || "border-rounded");
@@ -38,10 +38,10 @@ function Dashboard() {
         });
 
         const data = await response.json();
-        console.log("API Response:", data); // ✅ Debugging log
+        console.log("API Response:", data); 
 
         if (data.success && data.user) {
-          setUserId(data.user._id || ""); // ✅ Ensure userId is set properly
+          setUserId(data.user._id || ""); 
           setBio(data.user.bio || "");
         } else {
           console.error("Invalid user data received:", data);
@@ -49,7 +49,7 @@ function Dashboard() {
       } catch (error) {
         console.error("Error fetching user:", error);
       } finally {
-        setLoading(false); // ✅ Ensure loading stops
+        setLoading(false); 
       }
     };
 
@@ -57,7 +57,7 @@ function Dashboard() {
   }, []);
 
   if (loading) {
-    return <div className="loading-screen">Loading...</div>; // ✅ Prevents blank screen
+    return <div className="loading-screen">Loading...</div>;
   }
 
   return (
@@ -71,7 +71,7 @@ function Dashboard() {
             <DashContent 
               activeSection={activeSection}
               setShowPhoneView={setShowPhoneView}
-              userId={userId} // ✅ Pass userId
+              userId={userId} 
               bio={bio}
               setBio={setBio}
               phoneHeaderColor={phoneHeaderColor}

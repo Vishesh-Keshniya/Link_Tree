@@ -3,6 +3,9 @@ import "./Profile.css";
 import AddModal from "./modals/AddModal"; 
 import EditModal from "./modals/EditModal"; 
 import EditModalShop from "./modals/EditModalShop";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 
 const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
@@ -16,6 +19,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
   const [profileImage, setProfileImage] = useState("ava.png"); 
   const [username, setUsername] = useState(""); 
   const [editEntry, setEditEntry] = useState(null); 
+
   useEffect(() => {
     localStorage.setItem("activeTab", showLinks ? "link" : "shop");
   }, [showLinks]);
@@ -75,18 +79,19 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
 
   const handleEditClick = (entry) => {
     if (entry.saveMode) {
-      alert("Please turn off the save mode for this link to edit.");
+      toast.warning("⚠️ Please turn off the save mode for this link to edit.", { autoClose: 2000 });
       return;
     }
     setEditEntry(entry);
     if (entry.type === "link") {
-      setShowEditModal(true); // Show EditModal for Link entries
+      setShowEditModal(true);
       setShowEditModalShop(false);
     } else if (entry.type === "shop") {
-      setShowEditModalShop(true); // Show EditModalShop for Shop entries
+      setShowEditModalShop(true);
       setShowEditModal(false);
     }
   };
+  
 
   const updateEntry = (updatedEntry) => {
     setLinks(links.map(link => (link._id === updatedEntry._id ? updatedEntry : link)));
@@ -121,12 +126,12 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
   const deleteLink = async (id, type) => {
     const linkToDelete = links.find((link) => link._id === id);
     if (!linkToDelete) {
-      alert("Error: Entry not found.");
+      toast.error("❌ Error: Entry not found.");
       return;
     }
   
     if (linkToDelete.saveMode) {
-      alert("Please turn off the save mode before deleting.");
+      toast.warning("⚠️ Please turn off the save mode before deleting.");
       return;
     }
   
@@ -146,13 +151,15 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
   
       if (data.success) {
         setLinks(links.filter((link) => link._id !== id)); // Update the state
+        toast.success("✅ Entry deleted successfully!");
+
       } else {
         console.error("Failed to delete:", data.message);
-        alert("Failed to delete. Please try again.");
+        toast.error("❌ Failed to delete. Please try again.");
       }
     } catch (error) {
       console.error("Error deleting:", error);
-      alert("An error occurred while deleting. Please try again.");
+      toast.error("❌ An error occurred while deleting.");
     }
   };
   
@@ -194,6 +201,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
     }
   };
 
+  
   const handlePhoneHeaderColorChange = (e) => {
     setPhoneHeaderColor(e.target.value); // ✅ Updates Phone Header in real-time
   };
@@ -204,7 +212,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("Unauthorized. Please log in.");
+        toast.error("❌ Unauthorized. Please log in.");
         return;
       }
   
@@ -219,27 +227,27 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
   
       const data = await uploadRes.json();
       if (data.success) {
-        console.log("Uploaded Image URL:", data.image);
-        
-        // ✅ Store new image in local storage
         localStorage.setItem("profileImage", data.image);
-  
-        // ✅ Refresh the page after image upload
-        window.location.reload();  // Force refresh after setting image
+        toast.success("✅ Image uploaded successfully!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
         console.error("Image upload failed:", data);
-        alert("Image upload failed. Please try again.");
+        toast.error("❌ Image upload failed. Please try again.");
       }
     } catch (error) {
       console.error("Error uploading image:", error);
+      toast.error("❌ An error occurred while uploading.");
     }
   };
+  
   
   const handleRemoveImage = async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("Unauthorized. Please log in.");
+        toast.error("❌ Unauthorized. Please log in.");
         return;
       }
   
@@ -253,34 +261,32 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
   
       const data = await response.json();
       if (data.success) {
-        console.log("Profile image removed successfully");
-  
-        // ✅ Reset profile image to default
         setProfileImage("ava.png");
-  
-        // ✅ Remove from localStorage
         localStorage.removeItem("profileImage");
-  
-        // ✅ Refresh the page
-        window.location.reload();
+        toast.success("✅ Profile image removed successfully!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
         console.error("Failed to remove image:", data.message);
-        alert("Failed to remove image. Please try again.");
+        toast.error("❌ Failed to remove image. Please try again.");
       }
     } catch (error) {
       console.error("Error removing image:", error);
+      toast.error("❌ An error occurred while removing the image.");
     }
   };
+  
   
 
   const handleSaveSettings = async () => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
-        alert("Unauthorized. Please log in.");
+        toast.error("❌ Unauthorized. Please log in.");
         return;
       }
-
+  
       const response = await fetch("https://linktree-backend-0abv.onrender.com/api/update-settings", {
         method: "POST",
         headers: {
@@ -289,21 +295,26 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
         },
         body: JSON.stringify({ phoneHeaderColor, bio }),
       });
-
+  
       const data = await response.json();
       if (data.success) {
-        window.location.reload();
-        alert("Settings saved successfully!");
+        toast.success("✅ Settings saved successfully!");
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
-        alert("Failed to save settings. Please try again.");
+        toast.error("❌ Failed to save settings. Please try again.");
       }
     } catch (error) {
       console.error("Error saving settings:", error);
+      toast.error("❌ An error occurred while saving.");
     }
   };
   
   return (
     <div className="profile-container">
+      <ToastContainer position="top-center" autoClose={3000} />
+
       <h3 className="bannp">Profile</h3>
       <div className="profile-card">
         <div className="profile-header">
@@ -432,9 +443,9 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
                 <button 
   onClick={() => {
     if (link.saveMode) {
-      alert("Please turn off the save mode for this link to delete.");
+      toast.warning("Please turn off the save mode for this link to delete.");
     } else {
-      deleteLink(link._id, link.type); // ✅ Pass the type here
+      deleteLink(link._id, link.type); 
     }
   }}
 >
@@ -451,7 +462,15 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
       <div className="banner-card">
         <div className="banner-preview">
           <div className="banner"  style={{ backgroundColor: phoneHeaderColor }}>
-            <img src={profileImage} alt="User Avatar" className="banner-pic" />
+          <img
+  src={profileImage}
+  alt="User Avatar"
+  className="profile-img"
+  onError={(e) => {
+    e.target.onerror = null;
+    e.target.src = "https://linktree-backend-0abv.onrender.com/uploads/ava.png"; 
+  }}
+/>
             <h4 className="aname">@{username}</h4>
             <p className="sname">{bio}</p>
           </div>
