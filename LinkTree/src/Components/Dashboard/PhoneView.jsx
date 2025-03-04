@@ -26,7 +26,11 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
       const data = await response.json();
       if (data.success) {
         setUserName(data.user.username || "User");
-        setProfileImage(data.user.image || "ava.png");
+        setProfileImage(
+          data.user.image && data.user.image.trim() !== ""
+            ? data.user.image
+            : "https://linktree-backend-0abv.onrender.com/uploads/ava.png"
+        );
       }
     } catch (error) {
       console.error("Error fetching user details:", error);
@@ -177,7 +181,16 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
             <img src="shareicon.png" alt="Share" />
           </button>
         </div>
-        <img src={profileImage}  alt="User Avatar" className="profile-img" />
+        <img
+  src={profileImage}
+  alt="User Avatar"
+  className="profile-img"
+  onError={(e) => {
+    e.target.onerror = null; // Prevent infinite loop
+    e.target.src = "https://linktree-backend-0abv.onrender.com/uploads/ava.png"; // Fallback image
+  }}
+/>
+
         <h3 className="phonetitle" style={{ fontFamily: font, color: phoneFontColor }}>
           @{userName}
         </h3>

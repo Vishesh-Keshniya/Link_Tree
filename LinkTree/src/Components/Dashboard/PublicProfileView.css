@@ -25,12 +25,10 @@
 
 @media (max-width: 768px) {
     .phone-container-pb {
-      width: 90%; /* Make the container take up 90% of the screen width */
-      margin-left: auto; /* Center the container horizontally */
-      margin-right: auto;
-      margin-top: 10%; /* Adjust top margin for better spacing */
-      height: auto; /* Allow height to adjust based on content */
-      padding: 20px; /* Add padding for better spacing */
+      width: 100%; /* Make the container take up 90% of the screen width */
+      margin: 0;     
+      height: 100vh; /* Allow height to adjust based on content */
+      border-radius: none;
       border: none;
     }
   
@@ -51,9 +49,9 @@
   @media (max-width: 480px) {
     .phone-container-pb {
       width: 100%; /* Make the container take up the full width */
-      border-radius: 20px; /* Reduce border radius for smaller screens */
+      border-radius: none; /* Reduce border radius for smaller screens */
       border: 5px solid black; /* Reduce border thickness */
-      margin-top: 5%; /* Adjust top margin */
+     
       border: none;
       box-shadow: none;
     }

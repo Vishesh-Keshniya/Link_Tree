@@ -46,7 +46,11 @@ const PublicPhoneView = () => {
 
       if (data.success) {
         setUserName(data.user.username || "User");
-        setProfileImage(data.user.image || "https://linktree-backend-0abv.onrender.com/uploads/ava.png");
+        setProfileImage(
+          data.user.image && data.user.image.trim() !== ""
+            ? data.user.image
+            : "https://linktree-backend-0abv.onrender.com/uploads/ava.png"
+        );
         setBio(data.user.bio || "");
 
         // Map icon filenames to their corresponding URLs
@@ -103,7 +107,16 @@ const PublicPhoneView = () => {
       {/* Profile Section */}
       <div className={`phone-profile ${selectedTheme}`} style={{ backgroundColor: phoneHeaderColor }}>
         <div className="phone-header-pb">
-          <div><img src={profileImage} alt="Set Avatar" className="profile-img" /></div>
+          <div><img
+  src={profileImage}
+  alt="User Avatar"
+  className="profile-img"
+  onError={(e) => {
+    e.target.onerror = null; // Prevent infinite loop
+    e.target.src = "https://linktree-backend-0abv.onrender.com/uploads/ava.png"; // Fallback image
+  }}
+/>
+</div>
           <h3 className="phonetitle" style={{ fontFamily: font, color: phoneFontColor }}>
             @{userName}
           </h3>

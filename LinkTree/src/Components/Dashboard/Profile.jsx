@@ -307,7 +307,16 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
       <div className="profile-card">
         <div className="profile-header">
           <div>
-          <img src={profileImage} alt="User Avatar" className="profile-img" />
+          <img
+  src={profileImage}
+  alt="User Avatar"
+  className="profile-img"
+  onError={(e) => {
+    e.target.onerror = null; // Prevent infinite loop
+    e.target.src = "https://linktree-backend-0abv.onrender.com/uploads/ava.png"; // Fallback image
+  }}
+/>
+
           </div>
           <div className="profile-header-btn">
           <input
