@@ -25,7 +25,7 @@ const PublicPhoneView = () => {
 
   // Icon mapping
   const iconMapping = {
-    "youtube.png": "https://linktree-backend-0abv.onrender.com/uploads/youtube.png",
+    "youtube.png": "https://linktree-backend-0abv.onrender.com/uploads/yt.png",
     "fb.png": "https://linktree-backend-0abv.onrender.com/uploads/fb.png",
     "x.png": "https://linktree-backend-0abv.onrender.com/uploads/x.png",
     "instr.png": "https://linktree-backend-0abv.onrender.com/uploads/instagram.png",
@@ -179,7 +179,7 @@ const PublicPhoneView = () => {
               {showShopLinks && (
                 <button className="shop-now-btn" onClick={() => window.open(link.url, "_blank")}>
                   <div>
-                    <img src="shopg.png" alt="Shop Icon" />
+                    <img src="https://linktree-backend-0abv.onrender.com/uploads/shopg.png" alt="Shop Icon" />
                   </div>
                   <div>Buy Now</div>
                 </button>
