@@ -165,7 +165,11 @@ const handleButtonStyleChange = (style) => {
       const data = await response.json(); // Parse the response body
   
       if (response.ok) {
+        window.location.reload();
+
         alert("Settings saved successfully!");
+                window.location.reload();
+
       } else {
         console.error("Backend error:", data.message || "Unknown error");
         alert(`Failed to save settings: ${data.message}`);

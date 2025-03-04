@@ -51,6 +51,16 @@
     display: none; /* Hidden on desktop */
     
   }
+
+  .preview-button  button{
+    display: none;
+  }
+  
+  .phone{
+    display: none;
+  }
+ 
+  
   
   @media (max-width: 768px) {
     .header {
@@ -101,5 +111,25 @@
       border: none;
 
     }
+
+    .mobile-preview-btn{
+      display: flex;
+      position: fixed;
+      bottom: 100px;
+      right: 120px;
+      z-index: 1000;
+      background: #ffffff;
+      color: rgb(0, 0, 0);
+      padding: 10px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: none;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+    .phone{
+      display: block;
+    }
+    
   }
   

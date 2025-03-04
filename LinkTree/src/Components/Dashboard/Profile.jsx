@@ -292,6 +292,7 @@ const Profile = ({ bio, setBio , phoneHeaderColor, setPhoneHeaderColor }) => {
 
       const data = await response.json();
       if (data.success) {
+        window.location.reload();
         alert("Settings saved successfully!");
       } else {
         alert("Failed to save settings. Please try again.");

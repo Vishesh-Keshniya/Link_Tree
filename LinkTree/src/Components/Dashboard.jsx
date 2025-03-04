@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react"; // ✅ Import useEffect
 import Sidebar from "./Sidebar";
 import DashContent from "./Dashboard/Dashcontent";
 import PhoneView from "./Dashboard/PhoneView"; // Import PhoneView component
@@ -7,7 +7,8 @@ import "./Dashboard.css";
 function Dashboard() {
   const [activeSection, setActiveSection] = useState("Links"); // Default section
   const [showPhoneView, setShowPhoneView] = useState(false); // State to toggle PhoneView
-
+  const [userId, setUserId] = useState(null); // ✅ Set userId as null initially
+  const [loading, setLoading] = useState(true); // ✅ Loading state
   const [bio, setBio] = useState("");
   const [phoneHeaderColor, setPhoneHeaderColor] = useState("#000000");
   const [layout, setLayout] = useState(localStorage.getItem("layout") || "stack");
@@ -21,6 +22,44 @@ function Dashboard() {
   const [selectedTheme, setSelectedTheme] = useState(localStorage.getItem("selectedTheme") || "air-snow");
   const [selectedLiTheme, setSelectedLiTheme] = useState(localStorage.getItem("selectedLiTheme") || "airsnowli");
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          console.error("No token found. User not authenticated.");
+          setLoading(false);
+          return;
+        }
+
+        const response = await fetch("https://linktree-backend-0abv.onrender.com/api/user-details", {
+          method: "GET",
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        const data = await response.json();
+        console.log("API Response:", data); // ✅ Debugging log
+
+        if (data.success && data.user) {
+          setUserId(data.user._id || ""); // ✅ Ensure userId is set properly
+          setBio(data.user.bio || "");
+        } else {
+          console.error("Invalid user data received:", data);
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      } finally {
+        setLoading(false); // ✅ Ensure loading stops
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (loading) {
+    return <div className="loading-screen">Loading...</div>; // ✅ Prevents blank screen
+  }
+
   return (
     <div className="dash">
       {!showPhoneView ? (
@@ -29,9 +68,10 @@ function Dashboard() {
             <Sidebar setActiveSection={setActiveSection} activeSection={activeSection} />
           </div>
           <div className="r">
-          <DashContent 
+            <DashContent 
               activeSection={activeSection}
               setShowPhoneView={setShowPhoneView}
+              userId={userId} // ✅ Pass userId
               bio={bio}
               setBio={setBio}
               phoneHeaderColor={phoneHeaderColor}
@@ -69,8 +109,9 @@ function Dashboard() {
         </>
       ) : (
         <div className="phone-view-container">
-           <PhoneView 
+          <PhoneView 
             setShowPhoneView={setShowPhoneView}
+            userId={userId} // ✅ Pass userId to PhoneView
             bio={bio}
             phoneHeaderColor={phoneHeaderColor}
             layout={layout}
