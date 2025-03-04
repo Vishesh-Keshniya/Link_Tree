@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter  as Router, Routes, Route } from "react-router-dom";
 import Home from "./Components/Home";
 import Signup from "./Components/Signup";
 import Login from "./Components/Login";
@@ -18,7 +18,7 @@ function AppRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Details />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/phone-view/:userId" element={<PhoneView />} /> {/* Ensure this route exists */}
+          <Route path="/phone-view" element={<PhoneView />} /> {/* Ensure this route exists */}
           <Route path="/public-profile/:userId" element={<PublicProfileView />} />
         </Routes>
       </div>

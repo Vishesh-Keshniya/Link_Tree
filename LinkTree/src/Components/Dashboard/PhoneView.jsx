@@ -10,6 +10,8 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
   const [profileImage, setProfileImage] = useState("ava.png");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate(); // Hook for navigation
+  const [sharedLink, setSharedLink] = useState("");
+
 
   // Fetch user details (name)
   const fetchUserDetails = async () => {
@@ -78,20 +80,23 @@ const PhoneView = ({ bio = "", phoneHeaderColor = "#FFFFFF", userId, layout, sha
   }, []);
 
   const generateShareableLink = () => {
-    return `${window.location.origin}/public-profile/${userId}`; // Link to PublicProfileView
+    return `https://link-tree-eta-beryl.vercel.app/public-profile/${userId}`; // Link to PublicProfileView
   };
 
   // Handle Share Button Click
   const handleShareClick = async () => {
     const shareableLink = generateShareableLink();
+    setSharedLink(shareableLink); // Store the link in state
+  
     try {
       await navigator.clipboard.writeText(shareableLink);
-      alert("✅ Link copied to clipboard!"); // You can replace this with a toast notification
+      alert("✅ Link copied to clipboard!");
     } catch (error) {
       console.error("❌ Failed to copy link:", error);
       alert("❌ Failed to copy link. Please try again.");
     }
   };
+  
 
   const handleLinkClick = async (linkId, type) => {
     console.log("Sending Click Data:", { linkId, type });
