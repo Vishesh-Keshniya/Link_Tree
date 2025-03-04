@@ -5,6 +5,8 @@ import Profile from "./Profile";
 import Appearance from "../Appearance";
 import Analytics from "../Analytics";
 import SettingComp from "../SettingComp";
+import { useNavigate } from "react-router-dom";
+
 
 const DashContent = ({ activeSection }) => {
   const [fullName, setFullName] = useState("");
@@ -23,6 +25,8 @@ const DashContent = ({ activeSection }) => {
   const [userId, setUserId] = useState(null); 
   const [loading, setLoading] = useState(true);
     const [showLogout, setShowLogout] = useState(false); 
+    const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchUser = async () => {
